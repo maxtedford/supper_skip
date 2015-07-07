@@ -32,6 +32,7 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'capybara'
   gem 'launchy'
+  gem 'database_cleaner'
   #gem 'rack-livereload'
   # gem 'guard', require: false
   # gem 'guard-rspec', require: false
