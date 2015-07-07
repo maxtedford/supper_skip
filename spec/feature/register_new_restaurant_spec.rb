@@ -38,5 +38,54 @@ describe 'the application', type: :feature do
       expect(page).to have_content("Desc")
 
     end
+
+    it 'shows good errors for non unique name' do
+      click_on("Register Restaurant")
+      fill_in "Name", with: "Name"
+      fill_in "Description", with: "Desc"
+      fill_in "Slug", with: "Slug"
+      click_button "Register"
+
+      visit root_path
+
+      click_on("Register Restaurant")
+      fill_in "Name", with: "Name"
+      fill_in "Description", with: "some random shit"
+      fill_in "Slug", with: "my screen name"
+      click_button "Register"
+
+      within(".notice") do
+        expect(page).to have_content("Name has already been taken")
+      end
+    end
+
+    it 'shows good errors for non unique name' do
+      click_on("Register Restaurant")
+      fill_in "Name", with: "rando"
+      fill_in "Description", with: "Desc"
+      fill_in "Slug", with: "slugger"
+      click_button "Register"
+
+      visit root_path
+
+      click_on("Register Restaurant")
+      fill_in "Name", with: "12345678909"
+      fill_in "Description", with: "some random shit"
+      fill_in "Slug", with: "slugger"
+      click_button "Register"
+
+      within(".notice") do
+        expect(page).to have_content("Slug has already been taken")
+      end
+    end
+
+    it 'defaults to parameterized name if no slug is given' do
+      click_on("Register Restaurant")
+      fill_in "Name", with: "god damnit we need to scrub our database"
+      fill_in "Description", with: "Desc"
+      click_button "Register"
+
+      expect(current_path).to eq("/restaurants/god-damnit-we-need-to-scrub-our-database")
+    end
   end
 end
