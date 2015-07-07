@@ -31,7 +31,14 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'capybara'
   gem 'launchy'
-  gem 'rack-livereload'
+  #gem 'rack-livereload'
+  # gem 'guard', require: false
+  # gem 'guard-rspec', require: false
+  # gem 'guard-bundler', require: false
+  # gem 'guard-rails', require: false
+  # gem 'guard-livereload', require: false
+  # gem 'rack-livereload'
+  gem 'brakeman'
 end
 
 group :test do
