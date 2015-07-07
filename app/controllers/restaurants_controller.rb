@@ -9,7 +9,7 @@ class RestaurantsController < ApplicationController
       redirect_to "/restaurants/#{@restaurant.slug.downcase}"
       flash[:message] = "#{@restaurant.name} has been registered"
     else
-      flash[:errors] = @restaurant.errors.full_messages.join(", ")
+      flash.now[:errors] = @restaurant.errors.full_messages.join(", ")
       render :new
     end
   end
