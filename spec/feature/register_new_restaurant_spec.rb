@@ -81,11 +81,12 @@ describe 'the application', type: :feature do
 
     it 'defaults to parameterized name if no slug is given' do
       click_on("Register Restaurant")
-      fill_in "Name", with: "god damnit we need to scrub our database"
+      fill_in "Name", with: "Name"
       fill_in "Description", with: "Desc"
       click_button "Register"
 
-      expect(current_path).to eq("/restaurants/god-damnit-we-need-to-scrub-our-database")
+      expect(current_path).to eq("/restaurants/name")
+      expect(Restaurant.last.to_param).to eq("name")
     end
   end
 end
