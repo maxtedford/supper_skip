@@ -81,6 +81,7 @@ GEM
     coffee-script-source (1.8.0)
     columnize (0.8.9)
     daemon_controller (1.2.0)
+    database_cleaner (1.4.1)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
@@ -249,6 +250,7 @@ DEPENDENCIES
   bootstrap-sass
   brakeman
   capybara
+  database_cleaner
   dimensions-rails
   figaro
   formtastic
@@ -273,3 +275,6 @@ DEPENDENCIES
   spring
   turbolinks
   uglifier (>= 1.3.0)
+
+BUNDLED WITH
+   1.10.4

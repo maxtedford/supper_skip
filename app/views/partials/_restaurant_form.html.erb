@@ -1,0 +1,15 @@
+<%= form_for @restaurant do |f| %>
+  <%#= f.label :name %>
+  <%= f.text_field :name, placeholder: "Name" %>
+  <br>
+  <br>
+  <%#= f.label :description %>
+  <%= f.text_field :description, placeholder: "Description" %>
+  <br>
+  <br>
+  <%#= f.label :slug %>
+  <%= f.text_field :slug, placeholder: "Slug" %>
+  <br>
+  <br>
+  <%= f.submit "Register" %>
+<% end %>
