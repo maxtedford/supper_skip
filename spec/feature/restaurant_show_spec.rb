@@ -46,5 +46,9 @@ describe 'the application', type: :feature do
       expect(page).to have_content("name")
     end
 
+    it 'has an edit button' do
+      visit restaurant_path(@restaurant1)
+      expect(page).to have_content("Edit")
+    end
   end
 end
