@@ -5,10 +5,11 @@ class Item < ActiveRecord::Base
   validates :price, numericality: {greater_than: 0}
   validates :categories, presence: true
 
-  has_many :item_categories
-  has_many :categories, through: :item_categories
-  has_many :order_items
-  has_many :orders, through: :order_items
+  has_many   :item_categories
+  has_many   :categories, through: :item_categories
+  has_many   :order_items
+  has_many   :orders, through: :order_items
+  belongs_to :restaurant
 
   has_attached_file :image,
   styles: {
