@@ -40,6 +40,7 @@ describe 'the application', type: :feature do
 
     it 'shows items for given restaurant' do
       visit restaurant_path(@restaurant1)
+      
       expect(page).to have_content("other rest")
       expect(page).to have_content("other desc")
       expect(page).not_to have_content("title")
@@ -48,7 +49,24 @@ describe 'the application', type: :feature do
 
     it 'has an edit button' do
       visit restaurant_path(@restaurant1)
+      
       expect(page).to have_content("Edit")
+    end
+    
+    it 'actually edits restaurant' do
+      visit edit_restaurant_path(@restaurant)
+      
+      expect(find_field("some rest").value).to eq("some rest")
+      expect(find_field("some desc").value).to eq("some desc")
+      
+      fill_in "some rest", with: "new rest"
+      fill_in "some desc", with: "new desc"
+      fill_in "some-rest", with: "new-slug"
+      click_on "Update"
+      
+      expect(current_path).to eq("/restaurants/new-slug")
+      expect(page).to have_content("new rest")
+      expect(page).to have_content("new desc")
     end
   end
 end

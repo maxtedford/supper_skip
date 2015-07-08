@@ -1,0 +1,14 @@
+<br>
+<br>
+<%= form_for @restaurant do |f| %>
+  <%= f.text_field :name, placeholder: @restaurant.name %>
+  <br>
+  <br>
+  <%= f.text_field :description, placeholder: @restaurant.description %>
+  <br>
+  <br>
+  <%= f.text_field :slug, placeholder: @restaurant.slug %>
+  <br>
+  <br>
+  <%= f.submit %>
+<% end %>
