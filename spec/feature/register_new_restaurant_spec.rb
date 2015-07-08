@@ -46,8 +46,6 @@ describe 'the application', type: :feature do
       fill_in "Slug", with: "Slug"
       click_button "Register"
 
-      visit root_path
-
       click_on("Register Restaurant")
       fill_in "Name", with: "Name"
       fill_in "Description", with: "some random shit"

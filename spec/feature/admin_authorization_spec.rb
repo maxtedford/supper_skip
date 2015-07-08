@@ -86,6 +86,7 @@ context 'authenticated admin', type: :feature do
     click_button "Create Category"
 
     expect(current_path).to eq(root_path)
+    visit items_path
     expect(page).to have_content("Appetizers")
   end
 
