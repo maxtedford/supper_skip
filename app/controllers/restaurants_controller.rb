@@ -1,4 +1,7 @@
 class RestaurantsController < ApplicationController
+  before_action :require_login, only: [:edit, :create]
+  before_action :authorize!, only: [:edit]
+  
   def new
     @restaurant = Restaurant.new
   end
@@ -41,6 +44,19 @@ class RestaurantsController < ApplicationController
 
   def restaurant_params
     params.require(:restaurant).permit(:name, :description, :slug)
+  end
+
+  def require_login
+    unless current_user
+      redirect_to login_path
+    end
+  end
+
+  def authorize!
+    unless Permission.new(current_user).can_edit_restaurant?(@restaurant)
+      flash[:notice] = "Can't let you do that, #{current_user.name}!"
+      redirect_to root_path
+    end
   end
 end
 

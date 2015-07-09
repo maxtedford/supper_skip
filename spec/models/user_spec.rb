@@ -105,5 +105,16 @@ RSpec.describe User, :type => :model do
       expect(user.orders.count).to eq(2)
     end
 
+    it "associates a user with a restaurant" do
+      user = User.create(valid_attributes)
+      restaurant = Restaurant.create(name: "resto",
+                                     description: "descripto")
+      
+      user_role = Role.create(name: "owner")
+      
+      user.user_roles.create(role: user_role, restaurant: restaurant)
+      
+      expect(user.restaurants.first).to eq(restaurant)
+    end
   end
 end
