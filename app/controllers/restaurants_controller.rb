@@ -1,7 +1,8 @@
 class RestaurantsController < ApplicationController
+  before_action :load_restaurant
   before_action :require_login, only: [:edit, :create]
   before_action :authorize!, only: [:edit]
-  
+
   def new
     @restaurant = Restaurant.new
   end
@@ -19,19 +20,16 @@ class RestaurantsController < ApplicationController
   end
 
   def show
-    @restaurant = Restaurant.find_by(slug: params[:id])
   end
 
   def index
     @restaurants = Restaurant.all
   end
-  
+
   def edit
-    @restaurant = Restaurant.find_by(slug: params[:id])
   end
-  
+
   def update
-    @restaurant = Restaurant.find_by(slug: params[:id])
     if @restaurant.update(restaurant_params)
       flash[:message] = "You have updated #{@restaurant.name}'s info'"
       redirect_to restaurant_path(@restaurant)
@@ -59,10 +57,14 @@ class RestaurantsController < ApplicationController
       redirect_to root_path
     end
   end
-  
+
   def assign_owner
     user_role = Role.create(name: "owner")
     current_user.user_roles.create(role: user_role, restaurant: @restaurant)
+  end
+
+  def load_restaurant
+    @restaurant = Restaurant.find_by(slug: params[:id])
   end
 end
 
