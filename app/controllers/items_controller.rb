@@ -13,9 +13,10 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(item_params)
+    @restaurant = Restaurant.find(params[:restaurant_id].to_i)
+    @item = @restaurant.items.new(item_params)
     if @item.save
-      redirect_to restaurant_item_path(@items)
+      redirect_to item_path(@item)
     else
       render :new
     end
@@ -24,6 +25,6 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:title, :description, :price, :image, :retired, category_ids: [])
+    params.require(:item).permit(:title, :description, :price, :image, :retired, :restaurant_id, category_ids: [])
   end
 end

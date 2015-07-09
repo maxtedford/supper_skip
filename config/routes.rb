@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :orders
 
-  resources :items, only: [:index, :show]
+  resources :items
 
   get 'code', to: redirect('https://github.com/larsonkonr/dinner_dash')
   root 'restaurants#index'
