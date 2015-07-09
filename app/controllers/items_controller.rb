@@ -7,4 +7,8 @@ class ItemsController < ApplicationController
     @items      = Item.all
     @categories = Category.all
   end
+
+  def new
+    @item = Item.new
+  end
 end

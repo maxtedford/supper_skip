@@ -36,5 +36,7 @@ Rails.application.routes.draw do
 
     resources :categories, only: [:new, :create, :index]
   end
-  resources :restaurants, only: [:new, :create, :show, :edit, :update]
+  resources :restaurants, only: [:new, :create, :show, :edit, :update] do
+    resources :items
+  end
 end
