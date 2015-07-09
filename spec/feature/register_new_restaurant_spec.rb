@@ -10,6 +10,11 @@ describe 'the application', type: :feature do
                     password: "password",
                     password_confirmation: "password" }
       user = User.create(user_data)
+      user_role = Role.create(name: "owner")
+      restaurant = Restaurant.new(name: "resto1234",
+                                  description: "descripto1234")
+      user.user_roles.create(role: user_role, restaurant: restaurant)
+      
       visit root_path
       fill_in "email_address", with: user.email_address
       fill_in "password", with: user.password
