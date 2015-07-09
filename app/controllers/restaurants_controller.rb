@@ -9,6 +9,7 @@ class RestaurantsController < ApplicationController
   def create
     @restaurant = Restaurant.new(restaurant_params)
     if @restaurant.save
+      assign_owner
       redirect_to "/restaurants/#{@restaurant.slug.downcase}"
       flash[:message] = "#{@restaurant.name} has been registered"
     else
@@ -57,6 +58,11 @@ class RestaurantsController < ApplicationController
       flash[:notice] = "Can't let you do that, #{current_user.name}!"
       redirect_to root_path
     end
+  end
+  
+  def assign_owner
+    user_role = Role.create(name: "owner")
+    current_user.user_roles.create(role: user_role, restaurant: @restaurant)
   end
 end
 
