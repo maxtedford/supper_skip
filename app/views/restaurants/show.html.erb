@@ -8,7 +8,7 @@
 <% end %>
 <% @restaurant.items.each do |item| %>
   <div class="thumbnail col-sm-6 col-md-4">
-    <%= link_to (image_tag item.image.url(:medium)), item_path(item) %>
+    <%= link_to (image_tag item.image.url(:medium)), restaurant_item_path(@restaurant, item) %>
     <div class="caption">
       <h3 class="shadow"><%= item.title %></h3>
       <p class="shadow"><%= item.description %></p>
