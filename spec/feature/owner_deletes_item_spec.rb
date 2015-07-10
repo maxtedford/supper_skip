@@ -37,15 +37,13 @@ describe 'the application', type: :feature do
 
       visit restaurant_item_path(restaurant, item)
 
-      expect(page).to have_button("Edit")
+      expect(page).to have_button("Delete")
 
-      click_button "Edit"
-      fill_in "Title", with: "sandwich"
-      click_on "Update"
+      click_button "Delete"
 
       expect(current_path).to eq(restaurant_path(restaurant))
-      expect(page).to have_content("sandwich")
       expect(page).to_not have_content("burger")
     end
   end
 end
+

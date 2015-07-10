@@ -1,5 +1,5 @@
 class Restaurant::ItemsController < ApplicationController
-  before_action :load_restaurant, only: [:new, :create, :show]
+  before_action :load_restaurant
   def show
     @item = @restaurant.items.find(params[:id])
   end
@@ -20,6 +20,27 @@ class Restaurant::ItemsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def edit
+    @item = @restaurant.items.find(params[:id])
+  end
+
+  def update
+    @item = @restaurant.items.find(params[:id])
+    if @item.update(item_params)
+      redirect_to restaurant_path(@restaurant)
+      flash[:notice] = "#{@item.title} has been updated"
+    else
+      render :edit
+      flash.now[:errors] = @item.errors.full_messages.join(", ")
+    end
+  end
+
+  def destroy
+    @item = Item.find(params[:id])
+    @item.destroy
+    redirect_to restaurant_path(@restaurant)
   end
 
   private
