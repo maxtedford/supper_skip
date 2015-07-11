@@ -11,12 +11,12 @@ describe 'the application', type: :feature do
                     password_confirmation: "password" }
       user = User.create(user_data)
 
-      user_role = Role.create(name: "owner")
+      role = Role.create(name: "owner")
 
       restaurant = Restaurant.create!(name: "bob's big food shack",
                                       description: "descripto1234")
 
-      user.user_roles.create(role: user_role, restaurant: restaurant)
+      user.user_roles.create(role: role, restaurant: restaurant)
 
       category = Category.create!(name: "entrees")
 
