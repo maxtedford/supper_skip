@@ -59,7 +59,7 @@ class RestaurantsController < ApplicationController
   end
 
   def assign_owner
-    user_role = Role.create(name: "owner")
+    user_role = Role.find_or_create_by(name: "owner")
     current_user.user_roles.create(role: user_role, restaurant: @restaurant)
   end
 
