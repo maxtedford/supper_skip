@@ -16,8 +16,10 @@ class Restaurant::ItemsController < ApplicationController
   def create
     @item = @restaurant.items.new(item_params)
     if @item.save
+      flash[:message] = "Item has successfully been created"
       redirect_to restaurant_path(@restaurant)
     else
+      flash[:errors] = @item.errors.full_messages.join(", ")
       render :new
     end
   end
