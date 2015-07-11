@@ -1,5 +1,6 @@
 <table class="table table-hover">
   <thead>
+    <th>Retaurant</th>
     <th>Item</th>
     <th>Price</th>
     <th>Quantity</th>
@@ -8,6 +9,9 @@
   <tbody>
     <% order.items.uniq.each do |item| %>
     <tr class="cart_item cart_item_<%= item.id %>">
+      <% if item.restaurant %>
+        <td class="restaurant"><%= item.restaurant.name %></td>
+      <% end %>
       <td class="title"><%= link_to item.title, item_path(item) %></a></td>
       <td class="price">$<%= item.price %></td>
       <td class="quantity">

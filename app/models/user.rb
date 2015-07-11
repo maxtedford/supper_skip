@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 
   def verify?(role, restaurant)
     role = Role.find_by(name: role)
-    user_roles.where(restaurant_id: restaurant.id, role_id: role.id).any?
+    if restaurant && role
+      user_roles.where(restaurant_id: restaurant.id, role_id: role.id).any?
+    end
   end
 end
