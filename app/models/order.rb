@@ -95,4 +95,8 @@ class Order < ActiveRecord::Base
     order_items.retired.delete_all
     false
   end
+  
+  def group_by_restaurant
+    items.group_by(&:restaurant)
+  end
 end
