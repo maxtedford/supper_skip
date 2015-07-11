@@ -16,7 +16,7 @@ class Restaurant::ItemsController < ApplicationController
   def create
     @item = @restaurant.items.new(item_params)
     if @item.save
-      redirect_to restauraunt_path(@restaurant)
+      redirect_to restaurant_path(@restaurant)
     else
       render :new
     end

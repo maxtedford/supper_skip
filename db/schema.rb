@@ -72,10 +72,7 @@ ActiveRecord::Schema.define(version: 20150709203717) do
     t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
   end
-
-  add_index "restaurants", ["user_id"], name: "index_restaurants_on_user_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
