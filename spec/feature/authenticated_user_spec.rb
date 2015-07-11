@@ -2,17 +2,17 @@ require 'rails_helper'
 
 describe "the authenticated non-administrator", type: :feature do
   let(:user) { User.create!(name: "Boy George",
-                email_address: "cultureclubforever@eighties.com",
-                password: "password",
-                password_confirmation: "password") }
+    email_address: "cultureclubforever@eighties.com",
+    password: "password",
+    password_confirmation: "password") }
 
   let(:category) { Category.create!(name: "stuff") }
 
   let(:item) do
     Item.create!(title: "Greg's Homemade Chili",
-    description: "just like mom made it",
-    price: 15.50,
-    categories: [category])
+      description: "just like mom made it",
+      price: 15.50,
+      categories: [category])
   end
 
   before(:each) do

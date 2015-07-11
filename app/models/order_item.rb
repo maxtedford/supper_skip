@@ -1,6 +1,7 @@
 class OrderItem < ActiveRecord::Base
   belongs_to :order
   belongs_to :item
+  belongs_to :restaurant_order
 
   after_create :update_order
 

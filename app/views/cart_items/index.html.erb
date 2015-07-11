@@ -6,6 +6,7 @@
 <div class="edit-form">
   <table class="table table-hover">
     <thead>
+      <th>Restaurant</th>
       <th>Item</th>
       <th>Price</th>
       <th>Quantity</th>
@@ -14,6 +15,9 @@
     <tbody>
       <% @cart.each do |item| %>
       <tr class="cart_item cart_item_<%= item.id %>">
+        <% if item.restaurant %>
+          <td class="restaurant"><%= item.restaurant.name %></td>
+        <% end %>
         <td class="title"><%= item.title %></td>
         <td class="price">$<%= item.price %></td>
         <td class="quantity">
