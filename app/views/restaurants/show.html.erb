@@ -1,8 +1,7 @@
 <h1>Restaurant Show Page:</h1>
 <h1>Restaurant Name:<%= @restaurant.name %></h1>
-<br>
 <h1>Restaurant Description:<%= @restaurant.description %></h1>
-<br>
+<h1>Restaurant Owner:<%= @restaurant.owner %></h1>
 <% if current_user && Permission.new(current_user).can_edit_restaurant?(@restaurant) %>
   <h2><%= link_to "Edit Restaurant", edit_restaurant_path(@restaurant) %></h2>
   <h2><%= link_to "Create Item", new_restaurant_item_path(@restaurant) %></h2>
@@ -13,6 +12,7 @@
     <div class="caption">
       <h3 class="shadow"><%= item.title %></h3>
       <p class="shadow"><%= item.description %></p>
+      <p class="shadow"><%= item.categories.pluck(:name).join(", ") %></p>
       <p id="price" class="shadow"> Price:$<%= item.price %></p>
       <p><%= link_to "Add to Cart", cart_items_path(item: item), method: :post, class: "btn btn-default add-to-cart", role: "button" %></p>
     </div>

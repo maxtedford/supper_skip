@@ -5,6 +5,7 @@
       <div class="caption">
         <h3 class="shadow"><%= link_to restaurant.name, "/restaurants/#{restaurant.slug}" %></h3>
         <p class="shadow"><%= restaurant.description %></p>
+        <p class="shadow">Owned by: <%= restaurant.owner %></p>
       </div>
     </div>
   <%end%>
