@@ -224,7 +224,19 @@ restaurants = []
   puts "Created Restaurant #{num}"
 end
 
+admin = Role.create(name: "admin")
+puts "Created admin role"
+customer = Role.create(name: "customer")
+puts "Created customer role"
+owner = Role.create(name: "owner")
+puts "Created owner role"
+
+users = [rachel, josh, jorge, jeff]
+user = users.sample
+
 restaurants.each do |rest|
+  rest.user_roles.create(user: user, role: owner)
+  puts "#{user.name} now owns restaurant #{rest.name}"
   5.times do |num|
     rest.items.create(title: "Item title #{rest.id}-#{num}",
                       description: "Item description #{num}",
@@ -234,4 +246,3 @@ restaurants.each do |rest|
     puts "Created Item #{num} for Restaurant #{rest.id}"
   end
 end
-
