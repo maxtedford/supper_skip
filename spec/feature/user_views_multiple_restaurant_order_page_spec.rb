@@ -17,13 +17,17 @@ describe 'the application', type: :feature do
       @restaurant2 = Restaurant.create(name: "jimmy's",
         description: "yummy food")
       category = Category.create(name: "food")
-      @item = @restaurant.items.create(title: "some menu item",
+      @item = @restaurant.items.create(title: "some-menu-item",
         description: "delicious",
         price: 10,
         categories: [category])
       @item2 = @restaurant2.items.create(title: "jimmyburger",
         description: "juicy",
         price: 10,
+        categories: [category])
+      @item3 = @restaurant.items.create(title: "third-item",
+        description: "tasty",
+        price: 5,
         categories: [category])
       user.user_roles.create(role: user_role, restaurant: @restaurant)
 
@@ -35,8 +39,10 @@ describe 'the application', type: :feature do
 
     it "will display items' restaurants on the order show page" do
       click_on(@restaurant.name)
-      click_on("Add to Cart")
-
+      within(".some-menu-item") do
+        click_on("Add to Cart")
+      end
+      
       expect(page).to have_content("You have 1 #{@item.title} in your cart.")
 
       visit root_path
@@ -53,16 +59,35 @@ describe 'the application', type: :feature do
 
     it "will create a restaurant order" do
       click_on(@restaurant.name)
+      within(".some-menu-item") do
+        click_on("Add to Cart")
+      end
+      visit root_path
+      click_on(@restaurant2.name)
       click_on("Add to Cart")
+      
+      expect(RestaurantOrder.last.restaurant_id).to eq(@restaurant2.id)
+      expect(RestaurantOrder.find_by(restaurant_id: @restaurant2.id).items.count).to eq(1)
+      expect(RestaurantOrder.find_by(restaurant_id: @restaurant2.id).items.last.title).to eq("jimmyburger")
+    end
+    
+    it "will display a restaurant total on my cart show page" do
+      click_on(@restaurant.name)
+      within(".some-menu-item") do
+        click_on("Add to Cart")
+      end
+      visit root_path
+      click_on(@restaurant.name)
+      within(".third-item") do
+        click_on("Add to Cart")
+      end
       visit root_path
       click_on(@restaurant2.name)
       click_on("Add to Cart")
       visit cart_items_path
-      click_on "Checkout"
-      click_on "Update Order"
-      expect(RestaurantOrder.all.count).to eq(2)
-      expect(RestaurantOrder.find_by(restaurant_id: @restaurant2.id).items.count).to eq(1)
-      expect(RestaurantOrder.find_by(restaurant_id: @restaurant2.id).items.last.title).to eq("jimmyburger")
+      
+      expect(page).to have_content "Restaurant Total"
+      expect(page).to have_content "$20"
     end
   end
 end

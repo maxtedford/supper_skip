@@ -10,8 +10,14 @@ class OrderCart
 
   def add_item(item)
     order.order_items.create!(item: item, restaurant: item.restaurant)
+    grouped_rest_orders = order.order_items.group_by {|order_item| order_item.restaurant}
+    grouped_rest_orders.map do |rest, order_items|
+      if rest
+        rest_order = RestaurantOrder.create(restaurant_id: rest.id)
+        order_items.map { |order_item| order_item.update_attributes!(restaurant_order_id: rest_order.id) }
+      end
+    end
     order.items.reload
-
     update_quantities
   end
 
@@ -31,11 +37,11 @@ class OrderCart
   end
 
   def increase(item)
-    add_item(item)
-    #order.items << item
-    #order.items.reload
-    #order.save!
-    #update_quantities
+    # add_item(item)
+    order.items << item
+    order.items.reload
+    order.save!
+    update_quantities
   end
 
   def subtotal(item)

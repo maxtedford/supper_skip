@@ -22,11 +22,6 @@ class OrdersController < ApplicationController
     @order = @cart.order
     if @order.update(order_update_params)
       @order.place! if @order.in_cart?
-      grouped_rest_orders = @order.order_items.group_by {|order_item| order_item.restaurant}
-      grouped_rest_orders.map do |rest, order_items|
-        rest_order = RestaurantOrder.create(restaurant_id: rest.id)
-        order_items.map { |order_item| order_item.update_attributes!(restaurant_order_id: rest_order.id)}
-      end
       redirect_to @order
     else
       redirect_to edit_order_path
