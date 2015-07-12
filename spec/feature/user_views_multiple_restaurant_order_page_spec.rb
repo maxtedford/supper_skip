@@ -50,5 +50,20 @@ describe 'the application', type: :feature do
       expect(page).to have_content(@restaurant.name)
       expect(page).to have_content(@restaurant2.name)
     end
+    
+    it "will create a restaurant order" do
+      click_on(@restaurant.name)
+      click_on("Add to Cart")
+      visit root_path
+      click_on(@restaurant2.name)
+      click_on("Add to Cart")
+      visit cart_items_path
+      click_on "Checkout"
+      click_on "Update Order"
+
+      expect(RestaurantOrder.all.count).to eq(1)
+      expect(RestaurantOrder.items.count).to eq(2)
+      expect(RestaurantOrder.items.last.title).to eq("jimmyburger")
+    end
   end
 end
