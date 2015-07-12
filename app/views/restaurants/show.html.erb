@@ -12,7 +12,7 @@
     <div class="caption">
       <h3 class="shadow"><%= item.title %></h3>
       <p class="shadow"><%= item.description %></p>
-      <p class="shadow"><%= item.categories.pluck(:name) %></p>
+      <p class="shadow"><%= item.categories.pluck(:name).join(", ") %></p>
       <p id="price" class="shadow"> Price:$<%= item.price %></p>
       <p><%= link_to "Add to Cart", cart_items_path(item: item), method: :post, class: "btn btn-default add-to-cart", role: "button" %></p>
     </div>
