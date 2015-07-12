@@ -14,11 +14,8 @@ class CartOrderConverter
 
   def create_order_items(session_cart, item, order)
     quantity = session_cart[item.id]
-    order_items = []
     quantity.times do
       OrderItem.create!(item: item, order: order, restaurant_id: item.restaurant.id)
     end
-    #roh = order_items.group_by {|oi| oi.restaurant if oi.restaurant}
-    #ros = roh.each {|rest, oi| RestaurantOrder.create(restaurant_id: rest.id) }
   end
 end

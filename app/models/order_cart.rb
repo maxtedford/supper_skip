@@ -31,10 +31,11 @@ class OrderCart
   end
 
   def increase(item)
-    order.items << item
-    order.items.reload
-    order.save!
-    update_quantities
+    add_item(item)
+    #order.items << item
+    #order.items.reload
+    #order.save!
+    #update_quantities
   end
 
   def subtotal(item)

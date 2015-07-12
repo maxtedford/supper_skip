@@ -5,7 +5,8 @@ describe Order do
   let(:user)  { User.create!(name: "Viki", email_address: "viki@example.com", password: "password", password_confirmation: "password") }
   describe "relationships" do
     it "has many items" do
-      item = Item.create(title: "title", price: 10, description: "description", categories: [category])
+      restaurant = Restaurant.create!(name: "Jeff's Burger Shack", description: "good food")
+      item = restaurant.items.create(title: "title", price: 10, description: "description", categories: [category])
       order = Order.create(user: user, items: [item])
       expect(order.items).to eq([item])
     end
@@ -50,9 +51,11 @@ describe Order do
 
     it "cannot be placed with retired items" do
       category = Category.create!(name: "foo things")
-      item = Item.create!(title: "foo", description: "bar", price: 1, categories: [category], retired: true)
+      restaurant = Restaurant.create!(name: "Resto666", description: "good food")
+      item = Item.create!(title: "foo", description: "bar", price: 1, categories: [category], retired: true, restaurant_id: restaurant.id)
       order = Order.create!(user: user)
-      order.items << item
+      order_item = OrderItem.create!(item_id: item.id, order_id: order.id, restaurant_id: restaurant.id)
+      order.order_items << order_item
       expect { order.place }.to raise_error
     end
 
@@ -90,11 +93,14 @@ describe Order do
 
   describe "calculations" do
     it "has quantities for each item" do
-      item = Item.create!(title: "foo", description: "bar", price: 1, categories: [category], retired: true)
-
-      order = Order.create!(user: user, items: [item, item])
+      restaurant = Restaurant.create!(name: "Resto666", description: "good food")
+      item = Item.create!(title: "foo", description: "bar", price: 1, categories: [category], retired: true, restaurant_id: restaurant.id)
+      order = Order.create!(user: user)
+      2.times do 
+        order.items << item
+      end
       order.update_quantities
-      expect(order.items.first.quantity).to eq 2
+      expect(order.items.length).to eq 2
     end
 
     it "has subtotals for each item" do
