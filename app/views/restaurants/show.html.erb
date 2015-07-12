@@ -7,7 +7,7 @@
   <h2><%= link_to "Create Item", new_restaurant_item_path(@restaurant) %></h2>
 <% end %>
 <% @restaurant.items.each do |item| %>
-  <div class="thumbnail col-sm-6 col-md-4">
+  <div class="<%= item.title %> thumbnail col-sm-6 col-md-4">
     <%= link_to (image_tag item.image.url(:medium)), restaurant_item_path(@restaurant, item) %>
     <div class="caption">
       <h3 class="shadow"><%= item.title %></h3>
