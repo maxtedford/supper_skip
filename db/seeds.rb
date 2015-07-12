@@ -231,9 +231,11 @@ puts "Created customer role"
 owner = Role.create(name: "owner")
 puts "Created owner role"
 
+roles = [admin, customer, owner]
+
 users = [rachel, josh, jorge, jeff]
 
-restaurants.each do |rest|
+final_restaurants = restaurants.each do |rest|
   rest.user_roles.create(user: users.sample, role: owner)
   5.times do |num|
     rest.items.create(title: "Item title #{rest.id}-#{num}",

@@ -1,7 +1,7 @@
 <h1>Restaurant Show Page:</h1>
 <h1>Restaurant Name:<%= @restaurant.name %></h1>
 <h1>Restaurant Description:<%= @restaurant.description %></h1>
-<h1>Restaurant Owner:<%= @restaurant.owner %></h1>
+<h1>Restaurant Owner:<%#= @restaurant.owner %></h1>
 <% if current_user && Permission.new(current_user).can_edit_restaurant?(@restaurant) %>
   <h2><%= link_to "Edit Restaurant", edit_restaurant_path(@restaurant) %></h2>
   <h2><%= link_to "Create Item", new_restaurant_item_path(@restaurant) %></h2>
