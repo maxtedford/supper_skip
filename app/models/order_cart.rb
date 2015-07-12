@@ -37,11 +37,14 @@ class OrderCart
   end
 
   def increase(item)
-    #add_item(item)
-    order.items << item
-    order.items.reload
-    order.save!
-    update_quantities
+    ##real_order_item = order.order_items.find_by(item_id: item.id)
+    ##real_item = real_order_item.item
+    add_item(item)
+    ### item.restaurant = real_item.restaurant
+    ### order.items << item
+    ### order.items.reload
+    ### order.save!
+    ### update_quantities
   end
 
   def subtotal(item)

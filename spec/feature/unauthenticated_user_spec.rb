@@ -2,10 +2,13 @@ require 'rails_helper'
 
 describe 'the unauthenticated user', type: :feature do
   let(:category) { Category.create!(name: "stuff") }
+  let(:restaurant) { Restaurant.create!(name: "lev's sweet resto",
+                                        description: "ain't no meat here")}
   let(:item) do
     Item.create!(title: "Greg's Homemade Chili",
     description: "just like mom made it",
     price: 15.50,
+    restaurant_id: restaurant.id,
     categories: [category])
   end
 
@@ -40,7 +43,7 @@ describe 'the unauthenticated user', type: :feature do
 
   it "can add an item to the cart and view the cart" do
     item
-    visit items_path
+    visit restaurant_path(restaurant)
     find_link("Add to Cart").click
     expect(page).to have_content("You have 1 #{item.title}")
     visit cart_items_path

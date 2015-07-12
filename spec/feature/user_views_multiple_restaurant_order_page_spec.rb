@@ -42,7 +42,7 @@ describe 'the application', type: :feature do
       within(".some-menu-item") do
         click_on("Add to Cart")
       end
-      
+
       expect(page).to have_content("You have 1 #{@item.title} in your cart.")
 
       visit root_path
@@ -65,12 +65,12 @@ describe 'the application', type: :feature do
       visit root_path
       click_on(@restaurant2.name)
       click_on("Add to Cart")
-      
+
       expect(RestaurantOrder.last.restaurant_id).to eq(@restaurant2.id)
       expect(RestaurantOrder.find_by(restaurant_id: @restaurant2.id).items.count).to eq(1)
       expect(RestaurantOrder.find_by(restaurant_id: @restaurant2.id).items.last.title).to eq("jimmyburger")
     end
-    
+
     it "will display a restaurant total on my cart show page" do
       click_on(@restaurant.name)
       within(".some-menu-item") do
@@ -85,9 +85,9 @@ describe 'the application', type: :feature do
       click_on(@restaurant2.name)
       click_on("Add to Cart")
       visit cart_items_path
-      
-      expect(page).to have_content "Restaurant Total"
-      expect(page).to have_content "$20"
+
+      expect(page).to have_content "Restaurant Subtotal"
+      expect(page).to have_content "$15"
     end
   end
 end
