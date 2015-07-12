@@ -4,16 +4,22 @@
   <% end %>
 </div>
 <div class="edit-form">
+<% all_items = @cart.order.order_items.map { |oi| oi.item } %>
+  
+<% grouped_rest_orders = @cart.order.order_items.group_by(&:restaurant_id) %>
+  <%# unless %>
+<% grouped_rest_orders.each do |resto_id, order_items| %>
   <table class="table table-hover">
     <thead>
-      <th>Restaurant</th>
+    <th>Restaurant</th>
       <th>Item</th>
       <th>Price</th>
       <th>Quantity</th>
-      <th>Subtotal</th>
     </thead>
     <tbody>
-      <% @cart.each do |item| %>
+    <%# rest_items = grouped_rest_orders.flat_map { |rest_id, ois| ois.map { |oi| oi.item } } %>
+    <% items = order_items.map { |oi| oi.item } %>
+    <% items.each do |item| %>
       <tr class="cart_item cart_item_<%= item.id %>">
         <% if item.restaurant %>
           <td class="restaurant"><%= item.restaurant.name %></td>
@@ -23,13 +29,12 @@
         <td class="quantity">
           <%= button_to cart_item_path(item), method: :put, class: "btn btn-xs decrease float_left", name: "decrease" do %>
             <span class="glyphicon glyphicon-minus"></span>
-          <% end %>
+        <% end %>
           <div class="float_left"><%= item.quantity %></div>
           <%= button_to cart_item_path(item), method: :put, class: "btn btn-xs increase float_left", name: "increase" do %>
             <span class="glyphicon glyphicon-plus"></span>
           <% end %>
         </td>
-        <td class="subtotal">$<%= @cart.subtotal(item) %></td>
         <td> <%= button_to "Remove", cart_item_path(id: item), method: :delete %> </td>
       </tr>
       <% end %>
@@ -39,11 +44,13 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>Total: $<%= @cart.total_cost %></td>
+        <td>Restaurant Subtotal: $<%= order_items.uniq.map { |oi| @cart.subtotal(oi.item) }.inject(:+).to_i %></td>
       </tr>
     </tfoot>
   </table>
-
+<% end %>
+  Total: <%= all_items.map { |item| @cart.subtotal(item) }.inject(:+).to_i %>
+  
   <div class="checkout-button">
     <% if current_user %>
     <%= link_to "Checkout", edit_order_path(@cart.order), class: 'btn btn-default' %>

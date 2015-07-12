@@ -37,7 +37,7 @@ class OrderCart
   end
 
   def increase(item)
-    # add_item(item)
+    #add_item(item)
     order.items << item
     order.items.reload
     order.save!
