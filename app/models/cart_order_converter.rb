@@ -4,7 +4,6 @@ class CartOrderConverter
   end
 
   def convert(session_cart, user)
-    require 'pry';binding.pry
     order = Order.create!(user: user)
     items = Item.where(id: session_cart.keys)
     items.each do |item|
@@ -17,10 +16,9 @@ class CartOrderConverter
     quantity = session_cart[item.id]
     order_items = []
     quantity.times do
-      order_items << OrderItem.create!(item: item, order: order)
+      OrderItem.create!(item: item, order: order, restaurant_id: item.restaurant.id)
     end
     #roh = order_items.group_by {|oi| oi.restaurant if oi.restaurant}
-    
     #ros = roh.each {|rest, oi| RestaurantOrder.create(restaurant_id: rest.id) }
   end
 end

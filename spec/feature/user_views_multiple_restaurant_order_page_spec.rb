@@ -21,7 +21,7 @@ describe 'the application', type: :feature do
         description: "delicious",
         price: 10,
         categories: [category])
-      @item2 = @restaurant2.items.create(title: "jimmybuger",
+      @item2 = @restaurant2.items.create(title: "jimmyburger",
         description: "juicy",
         price: 10,
         categories: [category])
@@ -32,7 +32,7 @@ describe 'the application', type: :feature do
       fill_in "password", with: "password"
       click_on "Login!"
     end
-    
+
     it "will display items' restaurants on the order show page" do
       click_on(@restaurant.name)
       click_on("Add to Cart")
@@ -46,11 +46,11 @@ describe 'the application', type: :feature do
       visit cart_items_path
       click_on "Checkout"
       click_on "Update Order"
-      
+
       expect(page).to have_content(@restaurant.name)
       expect(page).to have_content(@restaurant2.name)
     end
-    
+
     it "will create a restaurant order" do
       click_on(@restaurant.name)
       click_on("Add to Cart")
@@ -60,10 +60,9 @@ describe 'the application', type: :feature do
       visit cart_items_path
       click_on "Checkout"
       click_on "Update Order"
-
-      expect(RestaurantOrder.all.count).to eq(1)
-      expect(RestaurantOrder.items.count).to eq(2)
-      expect(RestaurantOrder.items.last.title).to eq("jimmyburger")
+      expect(RestaurantOrder.all.count).to eq(2)
+      expect(RestaurantOrder.find_by(restaurant_id: @restaurant2.id).items.count).to eq(1)
+      expect(RestaurantOrder.find_by(restaurant_id: @restaurant2.id).items.last.title).to eq("jimmyburger")
     end
   end
 end

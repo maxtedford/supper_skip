@@ -3,6 +3,7 @@ class OrderItem < ActiveRecord::Base
   belongs_to :item
   belongs_to :restaurant_order
   belongs_to :restaurant
+  validates_presence_of :restaurant_id
 
   after_create :update_order
 
