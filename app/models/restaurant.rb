@@ -20,4 +20,9 @@ class Restaurant < ActiveRecord::Base
   def check_slug
     slug.blank? ? self.slug = name.parameterize : slug
   end
+
+  def owner
+    owner_id = user_roles.find_by(role_id: Role.find_by(name: "owner").id).user_id
+    User.find(owner_id).name
+  end
 end
