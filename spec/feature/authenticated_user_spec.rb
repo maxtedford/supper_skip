@@ -10,7 +10,7 @@ describe "the authenticated non-administrator", type: :feature do
 
   let(:restaurant) { Restaurant.create!(name: "Jeff's Resto",
                                         description: "foodies")}
-  
+
   let(:item) do
     Item.create!(title: "Greg's Homemade Chili",
       description: "just like mom made it",
@@ -49,7 +49,7 @@ describe "the authenticated non-administrator", type: :feature do
 
   it "can add an item to the cart and view the cart" do
     item
-    visit items_path
+    visit restaurant_path(restaurant)
     find_link("Add to Cart").click
     expect(page).to have_content("You have 1 #{item.title}")
     visit cart_items_path

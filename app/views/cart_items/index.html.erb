@@ -3,52 +3,114 @@
     <span class="notice empty-cart">Your cart is empty</span>
   <% end %>
 </div>
-<div class="edit-form">
-  <table class="table table-hover">
-    <thead>
-      <th>Restaurant</th>
-      <th>Item</th>
-      <th>Price</th>
-      <th>Quantity</th>
-      <th>Subtotal</th>
-    </thead>
-    <tbody>
-      <% @cart.each do |item| %>
-      <tr class="cart_item cart_item_<%= item.id %>">
-        <% if item.restaurant %>
-          <td class="restaurant"><%= item.restaurant.name %></td>
-        <% end %>
-        <td class="title"><%= item.title %></td>
-        <td class="price">$<%= item.price %></td>
-        <td class="quantity">
-          <%= button_to cart_item_path(item), method: :put, class: "btn btn-xs decrease float_left", name: "decrease" do %>
-            <span class="glyphicon glyphicon-minus"></span>
-          <% end %>
-          <div class="float_left"><%= item.quantity %></div>
-          <%= button_to cart_item_path(item), method: :put, class: "btn btn-xs increase float_left", name: "increase" do %>
-            <span class="glyphicon glyphicon-plus"></span>
-          <% end %>
-        </td>
-        <td class="subtotal">$<%= @cart.subtotal(item) %></td>
-        <td> <%= button_to "Remove", cart_item_path(id: item), method: :delete %> </td>
-      </tr>
+<% if current_user %>
+  <div class="edit-form">
+    <% all_items = @cart.order.order_items.map { |oi| oi.item } %>
+
+    <% grouped_rest_orders = @cart.order.order_items.group_by(&:restaurant_id) %>
+    <% grouped_rest_orders.each do |resto_id, order_items| %>
+      <% if resto_id %>
+        <table class="table table-hover">
+          <thead>
+            <th>Restaurant</th>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Item Subtotal</th>
+          </thead>
+          <tbody>
+            <% items = order_items.map { |oi| oi.item } %>
+            <% items.uniq.each do |item| %>
+              <tr class="cart_item cart_item_<%= item.id %>">
+                <% if item.restaurant %>
+                  <td class="restaurant"><%= item.restaurant.name %></td>
+                <% end %>
+                <td class="title"><%= item.title %></td>
+                <td class="price">$<%= item.price %></td>
+                <td class="quantity">
+                  <%= button_to cart_item_path(item), method: :put, class: "btn btn-xs decrease float_left", name: "decrease" do %>
+                    <span class="glyphicon glyphicon-minus"></span>
+                  <% end %>
+                  <div class="float_left"><%= @cart.count_of(item) %></div>
+
+                  <%= button_to cart_item_path(item), method: :put, class: "btn btn-xs increase float_left", name: "increase" do %>
+                    <span class="glyphicon glyphicon-plus"></span>
+                  <% end %>
+                </td>
+                <td class="subtotal">$<%= @cart.subtotal(item) %></td>
+                <td> <%= button_to "Remove", cart_item_path(id: item), method: :delete %> </td>
+              </tr>
+            <% end %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>Restaurant Subtotal: $<%= order_items.map(&:item).uniq.map { |item| @cart.subtotal(item) }.inject(:+).to_i %></td>
+            </tr>
+          </tfoot>
+        </table>
       <% end %>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>Total: $<%= @cart.total_cost %></td>
-      </tr>
-    </tfoot>
-  </table>
+    <% end %>
+    Total: <%= all_items.uniq.map { |item| @cart.subtotal(item) }.inject(:+).to_i %>
 
   <div class="checkout-button">
     <% if current_user %>
-    <%= link_to "Checkout", edit_order_path(@cart.order), class: 'btn btn-default' %>
+      <%= link_to "Checkout", edit_order_path(@cart.order), class: 'btn btn-default' %>
     <% else %>
-    <%= link_to "Checkout", login_path, class: 'btn btn-default' %>
+      <%= link_to "Checkout", login_path, class: 'btn btn-default' %>
     <% end %>
+  <% else %>
+
+    <div class="edit-form">
+      <table class="table table-hover">
+        <thead>
+          <th>Restaurant</th>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </thead>
+        <tbody>
+          <% @cart.each do |item| %>
+            <tr class="cart_item cart_item_<%= item.id %>">
+              <% if item.restaurant %>
+                <td class="restaurant"><%= item.restaurant.name %></td>
+              <% end %>
+              <td class="title"><%= item.title %></td>
+              <td class="price">$<%= item.price %></td>
+              <td class="quantity">
+                <%= button_to cart_item_path(item), method: :put, class: "btn btn-xs decrease float_left", name: "decrease" do %>
+                  <span class="glyphicon glyphicon-minus"></span>
+                <% end %>
+                <div class="float_left"><%= item.quantity %></div>
+                <%= button_to cart_item_path(item), method: :put, class: "btn btn-xs increase float_left", name: "increase" do %>
+                  <span class="glyphicon glyphicon-plus"></span>
+                <% end %>
+              </td>
+              <td class="subtotal">$<%= @cart.subtotal(item) %></td>
+              <td> <%= button_to "Remove", cart_item_path(id: item), method: :delete %> </td>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Total: $<%= @cart.total_cost %></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div class="checkout-button">
+        <% if current_user %>
+          <%= link_to "Checkout", edit_order_path(@cart.order), class: 'btn btn-default' %>
+        <% else %>
+          <%= link_to "Checkout", login_path, class: 'btn btn-default' %>
+        <% end %>
+      </div>
+    <% end %>
+    </div>
   </div>
-</div>
