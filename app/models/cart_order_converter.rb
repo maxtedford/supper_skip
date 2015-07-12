@@ -15,7 +15,7 @@ class CartOrderConverter
   def create_order_items(session_cart, item, order)
     quantity = session_cart[item.id]
     quantity.times do
-      OrderItem.create!(item: item, order: order)
+      OrderItem.create!(item: item, order: order, restaurant_id: item.restaurant.id)
     end
   end
 end

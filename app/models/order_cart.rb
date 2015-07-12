@@ -9,8 +9,9 @@ class OrderCart
   end
 
   def add_item(item)
-    order.order_items.create!(item: item)
+    order.order_items.create!(item: item, restaurant: item.restaurant)
     order.items.reload
+
     update_quantities
   end
 
@@ -30,10 +31,11 @@ class OrderCart
   end
 
   def increase(item)
-    order.items << item
-    order.items.reload
-    order.save!
-    update_quantities
+    add_item(item)
+    #order.items << item
+    #order.items.reload
+    #order.save!
+    #update_quantities
   end
 
   def subtotal(item)

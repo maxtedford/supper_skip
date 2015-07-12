@@ -8,11 +8,15 @@ describe "the authenticated non-administrator", type: :feature do
 
   let(:category) { Category.create!(name: "stuff") }
 
+  let(:restaurant) { Restaurant.create!(name: "Jeff's Resto",
+                                        description: "foodies")}
+  
   let(:item) do
     Item.create!(title: "Greg's Homemade Chili",
       description: "just like mom made it",
       price: 15.50,
-      categories: [category])
+      categories: [category],
+      restaurant_id: restaurant.id)
   end
 
   before(:each) do
