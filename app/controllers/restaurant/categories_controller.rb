@@ -1,5 +1,5 @@
 class Restaurant::CategoriesController < ApplicationController
-  before_action :load_restaurant, only: [:index, :new, :create]
+  before_action :load_restaurant, only: [:index, :new, :create, :destroy, :edit, :update]
 
   def index
     @categories = Category.where(restaurant_id: @restaurant.id)
@@ -17,6 +17,27 @@ class Restaurant::CategoriesController < ApplicationController
     else
       flash[:errors] = @category.errors.full_messages.join(", ")
       render :new
+    end
+  end
+
+  def destroy
+    @category = Category.find(params[:id])
+    @category.destroy
+    redirect_to restaurant_categories_path(@restaurant)
+  end
+
+  def edit
+    @category = Category.find(params[:id])
+  end
+
+  def update
+    @category = Category.find(params[:id])
+    if @category.update(category_params)
+      flash[:message] = "You've updated a category"
+      redirect_to restaurant_categories_path(@restaurant)
+    else
+      flash[:error] = @category.errors.full_messages.join(", ")
+      render :edit
     end
   end
 
