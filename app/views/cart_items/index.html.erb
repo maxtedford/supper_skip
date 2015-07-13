@@ -53,7 +53,7 @@
         </table>
       <% end %>
     <% end %>
-    Total: <%= all_items.uniq.map { |item| @cart.subtotal(item) }.inject(:+).to_i %>
+    Grand Total: $<%= all_items.uniq.map { |item| @cart.subtotal(item) }.inject(:+).to_i %>
 
   <div class="checkout-button">
     <% if current_user %>

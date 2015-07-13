@@ -71,7 +71,7 @@ describe 'the application', type: :feature do
       expect(RestaurantOrder.find_by(restaurant_id: @restaurant2.id).items.last.title).to eq("jimmyburger")
     end
 
-    it "will display a restaurant total on my cart show page" do
+    it "will display a restaurant total on cart show page" do
       click_on(@restaurant.name)
       within(".some-menu-item") do
         click_on("Add to Cart")
@@ -88,6 +88,39 @@ describe 'the application', type: :feature do
 
       expect(page).to have_content "Restaurant Subtotal"
       expect(page).to have_content "$15"
+    end
+    
+    it "will display a restaurant grand total on cart show page" do
+      click_on(@restaurant.name)
+      within(".some-menu-item") do
+        click_on("Add to Cart")
+      end
+      visit root_path
+      click_on(@restaurant.name)
+      within(".third-item") do
+        click_on("Add to Cart")
+      end
+      visit root_path
+      click_on(@restaurant2.name)
+      click_on("Add to Cart")
+      visit cart_items_path
+      
+      expect(page).to have_content("Grand Total: $25")
+    end
+    
+    it "will display the names of both restaurants on the cart show page" do
+      visit root_path
+      click_on(@restaurant.name)
+      within(".third-item") do
+        click_on("Add to Cart")
+      end
+      visit root_path
+      click_on(@restaurant2.name)
+      click_on("Add to Cart")
+      visit cart_items_path
+      
+      expect(page).to have_content("resto1234")
+      expect(page).to have_content("jimmy's")
     end
   end
 end
