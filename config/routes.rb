@@ -36,12 +36,10 @@ Rails.application.routes.draw do
 
     resources :categories, only: [:new, :create, :index]
   end
-  #resources :restaurants, only: [:new, :create, :show, :edit, :update] do
-   # resources :items
-  #end
-  #
+
   resources :restaurants do
     resources :categories, only: [:new, :create, :index], module: 'restaurant'
     resources :items, module: 'restaurant'
+    resources :orders, module: 'restaurant'
   end
 end

@@ -21,7 +21,7 @@ class OrdersController < ApplicationController
   def update
     @order = @cart.order
     if @order.update(order_update_params)
-      @order.place! if @order.in_cart?
+      @order.place! && @order.order_items.last.restaurant_orders.place! if @order.in_cart?
       redirect_to @order
     else
       redirect_to edit_order_path

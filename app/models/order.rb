@@ -13,15 +13,15 @@ class Order < ActiveRecord::Base
 
   aasm column: :status do
     # each state has a predicate method we can use to check status, like .in_cart?
-    #state :in_cart, initial: true
-    #state :ordered
-    #state :paid
+    state :in_cart, initial: true
+    state :ordered
+    state :paid
     state :ready_for_preparation
-    #state :cancelled
+    state :cancelled
     state :in_preparation
     state :ready_for_delivery
     state :out_for_delivery
-    #state :completed
+    state :completed
 
     # events give us bang methods, like place! for changing order status
     event :place do
