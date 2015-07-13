@@ -37,6 +37,6 @@ class OrdersController < ApplicationController
   end
 
   def place_restaurant_order
-
+    @order.restaurant_orders.map {|restaurant_order| restaurant_order.place!}
   end
 end

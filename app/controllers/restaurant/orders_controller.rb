@@ -25,7 +25,7 @@ class Restaurant::OrdersController < ApplicationController
   end
 
   def load_restaurant_order
-     RestaurantOrder.last
+    @restaurant_order = RestaurantOrder.find(params[:id])
   end
 end
 

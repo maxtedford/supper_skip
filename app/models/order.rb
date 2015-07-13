@@ -2,6 +2,7 @@ class Order < ActiveRecord::Base
   include AASM
   has_many :order_items
   has_many :items, through: :order_items
+  has_many :restaurant_orders
   belongs_to :user
 
   validates :user, presence: true

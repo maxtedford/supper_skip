@@ -1,6 +1,7 @@
 class RestaurantOrder < ActiveRecord::Base
   include AASM
   belongs_to :restaurant
+  belongs_to :order
   has_many :order_items
   has_many :items, through: :order_items
 
@@ -69,5 +70,16 @@ class RestaurantOrder < ActiveRecord::Base
     return true if order_items.retired.empty?
     order_items.retired.delete_all
     false
+  end
+
+  def update_status(params)
+    case params[:status]
+    when 'pay'
+      self.pay!
+    when 'cancel'
+      self.cancel!
+    when 'complete'
+      self.complete!
+    end
   end
 end
