@@ -79,6 +79,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.8.0)
+    color_routes (1.0.0)
     columnize (0.8.9)
     daemon_controller (1.2.0)
     database_cleaner (1.4.1)
@@ -250,6 +251,7 @@ DEPENDENCIES
   bootstrap-sass
   brakeman
   capybara
+  color_routes
   database_cleaner
   dimensions-rails
   figaro
@@ -275,3 +277,6 @@ DEPENDENCIES
   spring
   turbolinks
   uglifier (>= 1.3.0)
+
+BUNDLED WITH
+   1.10.5
