@@ -5,6 +5,7 @@
 <% if current_user && Permission.new(current_user).can_edit_restaurant?(@restaurant) %>
   <h2><%= link_to "Edit Restaurant", edit_restaurant_path(@restaurant) %></h2>
   <h2><%= link_to "Create Item", new_restaurant_item_path(@restaurant) %></h2>
+  <h2><%= link_to "Categories", restaurant_categories_path(@restaurant) %></h2>
 <% end %>
 <% @restaurant.items.each do |item| %>
   <div class="<%= item.title %> thumbnail col-sm-6 col-md-4">

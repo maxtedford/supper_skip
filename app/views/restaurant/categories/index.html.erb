@@ -1,0 +1,6 @@
+<%= button_to "Add Category", new_restaurant_category_path(restaurant_id: params[:restaurant_id]), method: :get%>
+
+<% @categories.each do |category| %>
+  <h3><%= category.name %></h3>
+  <br>
+<% end %>

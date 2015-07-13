@@ -8,6 +8,7 @@ class Restaurant < ActiveRecord::Base
   has_many :users, through: :user_roles
   has_many :restaurant_orders
   has_many :order_items, through: :restaurant_orders
+  has_many :categories
 
   def to_param
     slug

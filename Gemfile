@@ -22,6 +22,7 @@ gem 'aasm'
 gem 'dimensions-rails'
 gem 'formtastic'
 gem 'jquery-turbolinks'
+gem 'color_routes'
 
 group :development, :test do
   gem 'better_errors'
