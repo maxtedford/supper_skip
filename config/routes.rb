@@ -7,10 +7,9 @@ Rails.application.routes.draw do
 
   resources :users
   resources :cart_items
-
   resources :orders
-
   resources :items
+  resources :user_roles, only: [:new, :create]
 
   get 'code', to: redirect('https://github.com/larsonkonr/dinner_dash')
   root 'restaurants#index'

@@ -1,0 +1,16 @@
+<br>
+<br>
+<%= form_for @user_role do |f| %>
+  <%= f.label "Email address:" %>
+  <%= f.text_field :user_id, placeholder: "Email Address" %>
+  <br>
+  <br>
+  <%= f.label "User role:" %>
+  <%= f.select :role_id, options_for_select(@roles.map{|role| ["#{role.name}", role.id] }) %>
+  <br>
+  <br>
+  <%= f.hidden_field :restaurant_id, { value: params[:restaurant_id] } %>
+  <br>
+  <br>
+  <%= f.submit "Register" %>
+<% end %>
