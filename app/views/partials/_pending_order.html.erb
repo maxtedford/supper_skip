@@ -18,8 +18,8 @@
           <tr class="cart_item cart_item_<%= item.id %>">
             <% if item.restaurant %>
               <td class="restaurant"><%= item.restaurant.name %></td>
-          <% end %>
-            <td class="title"><%= item.title %></td>
+            <% end %>
+            <td class="title"><%=link_to item.title, item_path(item) %></td>
             <td class="price">$<%= item.price %></td>
             <td class="quantity">
               <div class="float_left"><%= (order.subtotal(item)/item.price).to_i %></div>
@@ -37,6 +37,7 @@
         </tr>
         </tfoot>
       </table>
-<% end %>
-<% end %>
+    <% end %>
+  <% end %>
   Grand Total: $<%= all_items.uniq.map { |item| order.subtotal(item) }.inject(:+).to_i %>
+</div>

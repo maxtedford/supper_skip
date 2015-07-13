@@ -85,6 +85,12 @@ describe 'the application', type: :feature do
       click_on(@restaurant2.name)
       click_on("Add to Cart")
       visit cart_items_path
+      
+      expect(page).to have_content "Restaurant Subtotal"
+      expect(page).to have_content "$15"
+
+      click_on "Checkout"
+      click_on "Update Order"
 
       expect(page).to have_content "Restaurant Subtotal"
       expect(page).to have_content "$15"
@@ -106,6 +112,11 @@ describe 'the application', type: :feature do
       visit cart_items_path
       
       expect(page).to have_content("Grand Total: $25")
+
+      click_on "Checkout"
+      click_on "Update Order"
+
+      expect(page).to have_content("Grand Total: $25")
     end
     
     it "will display the names of both restaurants on the cart show page" do
@@ -118,7 +129,13 @@ describe 'the application', type: :feature do
       click_on(@restaurant2.name)
       click_on("Add to Cart")
       visit cart_items_path
+
+      expect(page).to have_content("resto1234")
+      expect(page).to have_content("jimmy's")
       
+      click_on "Checkout"
+      click_on "Update Order"
+
       expect(page).to have_content("resto1234")
       expect(page).to have_content("jimmy's")
     end
