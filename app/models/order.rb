@@ -16,7 +16,11 @@ class Order < ActiveRecord::Base
     state :in_cart, initial: true
     state :ordered
     state :paid
+    state :ready_for_preparation
     state :cancelled
+    state :in_preparation
+    state :ready_for_delivery
+    state :out_for_delivery
     state :completed
 
     # events give us bang methods, like place! for changing order status
@@ -95,7 +99,7 @@ class Order < ActiveRecord::Base
     order_items.retired.delete_all
     false
   end
-  
+
   def group_by_restaurant
     items.group_by(&:restaurant)
   end
