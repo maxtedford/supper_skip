@@ -62,4 +62,10 @@ class RestaurantOrder < ActiveRecord::Base
     quantity = quantities[item.id].quantity
     quantity * item.price
   end
+
+  def no_retired_items?
+    return true if order_items.retired.empty?
+    order_items.retired.delete_all
+    false
+  end
 end
