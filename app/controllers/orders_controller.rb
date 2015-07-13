@@ -21,7 +21,7 @@ class OrdersController < ApplicationController
   def update
     @order = @cart.order
     if @order.update(order_update_params)
-      @order.place! && @order.order_items.last.restaurant_order.place! if @order.in_cart?
+      @order.place! && place_restaurant_order if @order.in_cart?
       redirect_to @order
     else
       redirect_to edit_order_path
@@ -34,5 +34,9 @@ class OrdersController < ApplicationController
 
   def order_update_params
     params.require(:order).permit(:address, :delivery)
+  end
+
+  def place_restaurant_order
+
   end
 end

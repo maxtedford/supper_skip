@@ -6,6 +6,10 @@
     <% grouped_rest_orders.each do |resto_id, order_items| %>
       <% if resto_id %>
         <h3>Status:<%= rest_order.status %></h3>
+        <%= link_to "Mark as Paid", edit_restaurant_order_path(rest_order.restaurant, rest_order, rest_order: {status: 'pay'}), methods: 'put' if rest_order.may_pay? %> <br>
+        <%= link_to "Mark as Completed", edit_restaurant_order_path(rest_order.restaurant, rest_order, rest_order: {status: 'complete'}), methods: 'put' if rest_order.may_complete? %> <br>
+        <%= link_to "Mark as Cancelled", edit_restaurant_order_path(rest_order.restaurant, rest_order, rest_order: {status: 'cancel'}), methods: 'put' if rest_order.may_cancel? %> <br><br><br>
+
         <table class="table table-hover">
           <thead>
             <th>Item</th>

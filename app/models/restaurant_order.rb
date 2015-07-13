@@ -4,6 +4,8 @@ class RestaurantOrder < ActiveRecord::Base
   has_many :order_items
   has_many :items, through: :order_items
 
+  enum status: %w(ordered paid cancelled completed)
+
   aasm column: :status do
     # each state has a predicate method we can use to check status, like .in_cart?
     state :in_cart, initial: true

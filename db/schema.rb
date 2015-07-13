@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 20150713212144) do
     t.integer  "restaurant_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "status"
+    t.integer  "status",        default: 0
   end
 
   add_index "restaurant_orders", ["restaurant_id"], name: "index_restaurant_orders_on_restaurant_id", using: :btree
