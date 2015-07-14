@@ -1,9 +1,9 @@
 <div class="container sidenav col-md-3 affix">
-<ul class="nav nav-pills nav-stacked sidenav-list" id="sidebar">
-  <% @restaurant.categories.each do |category| %>
-    <li class="menu-link shadow"><%= link_to category.name, restaurant_category_path(@restaurant, category) %></li>
-  <% end %>
-</ul>
+  <ul class="nav nav-pills nav-stacked sidenav-list" id="sidebar">
+    <% @restaurant.categories.each do |category| %>
+      <li class="menu-link shadow"><%= link_to category.name, restaurant_category_path(@restaurant, category) %></li>
+    <% end %>
+  </ul>
 </div>
 <div id="rest-show">
   <h1>Welcome to <%= @restaurant.name %>!</h1>
@@ -16,6 +16,7 @@
     <h2 class="link"><%= link_to "Create Item", new_restaurant_item_path(@restaurant) %></h2>
     <h2 class="link"><%= link_to "Categories", restaurant_categories_path(@restaurant) %></h2>
     <h2 class="link"><%= link_to "Orders", restaurant_orders_path(@restaurant) %></h2>
+    <h2 class="link"><%= link_to "Add User", new_user_role_path(restaurant_id: @restaurant.id) %></h2>
   <% end %>
   <% @restaurant.categories.each do |cat| %>
     <div id="category<%= cat.name %>">
