@@ -251,6 +251,7 @@ DEPENDENCIES
   bootstrap-sass
   brakeman
   capybara
+  coffee-script
   color_routes
   database_cleaner
   dimensions-rails

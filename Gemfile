@@ -23,7 +23,7 @@ gem 'dimensions-rails'
 gem 'formtastic'
 gem 'jquery-turbolinks'
 gem 'color_routes'
-
+gem 'coffee-script'
 group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'

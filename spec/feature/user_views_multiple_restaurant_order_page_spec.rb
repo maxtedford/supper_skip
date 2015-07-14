@@ -7,28 +7,30 @@ describe 'the application', type: :feature do
 
     before(:each) do
       user_data = { name: "Viki",
-        email_address: "viki@example.com",
-        password: "password",
-        password_confirmation: "password" }
+                    email_address: "viki@example.com",
+                    password: "password",
+                    password_confirmation: "password" }
       user = User.create(user_data)
       user_role = Role.create(name: "customer")
       @restaurant = Restaurant.create(name: "resto1234",
-        description: "descripto1234")
+                                      description: "descripto1234")
       @restaurant2 = Restaurant.create(name: "jimmy's",
-        description: "yummy food")
-      category = Category.create(name: "food")
+                                       description: "yummy food")
+      category = @restaurant.categories.create(name: "food")
+      category2 = @restaurant2.categories.create(name: "food")
       @item = @restaurant.items.create(title: "some-menu-item",
-        description: "delicious",
-        price: 10,
-        categories: [category])
+                                       description: "delicious",
+                                       price: 10,
+                                       categories: [category])
       @item2 = @restaurant2.items.create(title: "jimmyburger",
-        description: "juicy",
-        price: 10,
-        categories: [category])
+                                         description: "juicy",
+                                         price: 10,
+                                         categories: [category2])
+
       @item3 = @restaurant.items.create(title: "third-item",
-        description: "tasty",
-        price: 5,
-        categories: [category])
+                                        description: "tasty",
+                                        price: 5,
+                                        categories: [category])
       user.user_roles.create(role: user_role, restaurant: @restaurant)
 
       visit root_path
@@ -51,7 +53,7 @@ describe 'the application', type: :feature do
 
       visit cart_items_path
       click_on "Checkout"
-      click_on "Update Order"
+      click_button "Update Order"
 
       expect(page).to have_content(@restaurant.name)
       expect(page).to have_content(@restaurant2.name)
@@ -85,7 +87,7 @@ describe 'the application', type: :feature do
       click_on(@restaurant2.name)
       click_on("Add to Cart")
       visit cart_items_path
-      
+
       expect(page).to have_content "Restaurant Subtotal"
       expect(page).to have_content "$15"
 
@@ -95,7 +97,7 @@ describe 'the application', type: :feature do
       expect(page).to have_content "Restaurant Subtotal"
       expect(page).to have_content "$15"
     end
-    
+
     it "will display a restaurant grand total on cart show page" do
       click_on(@restaurant.name)
       within(".some-menu-item") do
@@ -110,7 +112,7 @@ describe 'the application', type: :feature do
       click_on(@restaurant2.name)
       click_on("Add to Cart")
       visit cart_items_path
-      
+
       expect(page).to have_content("Grand Total: $25")
 
       click_on "Checkout"
@@ -118,7 +120,7 @@ describe 'the application', type: :feature do
 
       expect(page).to have_content("Grand Total: $25")
     end
-    
+
     it "will display the names of both restaurants on the cart show page" do
       visit root_path
       click_on(@restaurant.name)
@@ -126,13 +128,16 @@ describe 'the application', type: :feature do
         click_on("Add to Cart")
       end
       visit root_path
+
       click_on(@restaurant2.name)
+      within(".jimmyburger") do
       click_on("Add to Cart")
+      end
       visit cart_items_path
 
       expect(page).to have_content("resto1234")
       expect(page).to have_content("jimmy's")
-      
+
       click_on "Checkout"
       click_on "Update Order"
 
