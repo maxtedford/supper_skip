@@ -30,5 +30,12 @@ describe 'the application', type: :feature do
         expect(page).to have_content("cheesecake")
       end
     end
+
+    it "can filter items by categories" do
+      click_on "lunch"
+
+      expect(page).to have_content("cheesecake")
+      expect(page).to_not have_content("burger")
+    end
   end
 end
