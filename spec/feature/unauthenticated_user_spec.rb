@@ -41,7 +41,9 @@ describe 'the unauthenticated user', type: :feature do
     expect(page).to have_css("span", "category-id-#{item.categories.first.id}")
   end
 
-  it "can add an item to the cart and view the cart" do
+  it "*can add an item to the cart and view the cart" do
+    user = User.create!(user_attributes)
+    user.roles.create(name: "owner")
     category = restaurant.categories.create(name: "food")
     item = Item.create!(title: "Mom's Homemade Chili",
     description: "just like mom made it",
@@ -100,6 +102,7 @@ describe 'the unauthenticated user', type: :feature do
   it 'logs in without clearing the cart' do
     item
     user = User.create!(user_attributes)
+    user.roles.create(name: "owner")
     visit items_path
     find_link("Add to Cart").click
     fill_in "email address", with: user.email_address
