@@ -1,3 +1,10 @@
+<div class="container sidenav col-md-3 affix">
+    <ul class="nav nav-pills nav-stacked sidenav-list" id="sidebar">
+      <% @restaurant.categories.each do |category| %>
+        <li class="menu-link shadow"><%= link_to category.name, "#category-id-#{category.id}" %></li>
+      <% end %>
+    </ul>
+</div>
 <h1>Restaurant Show Page:</h1>
 <h1>Restaurant Name:<%= @restaurant.name %></h1>
 <h1>Restaurant Description:<%= @restaurant.description %></h1>
@@ -9,19 +16,21 @@
   <h2><%= link_to "Orders", restaurant_orders_path(@restaurant) %></h2>
 <% end %>
 <% @restaurant.categories.each do |cat| %>
-  <h2><%= cat.name %></h2>
-  <% cat.items.each do |item| %>
-    <div class="<%= item.title %> thumbnail col-sm-6 col-md-4">
-      <%= link_to (image_tag item.image.url(:medium)), restaurant_item_path(@restaurant, item) %>
-      <div class="caption">
-        <h3 class="shadow"><%= item.title %></h3>
-        <p class="shadow"><%= item.description %></p>
-        <p class="shadow"><%= item.categories.pluck(:name).join(", ") %></p>
-        <p id="price" class="shadow"> Price:$<%= item.price %></p>
-        <p><%= link_to "Add to Cart", cart_items_path(item: item), method: :post, class: "btn btn-default add-to-cart", role: "button" %></p>
+  <div id="category<%= cat.name %>">
+    <h2><%= cat.name %></h2>
+    <% cat.items.each do |item| %>
+      <div class="<%= item.title %> thumbnail col-sm-6 col-md-4">
+        <%= link_to (image_tag item.image.url(:medium)), restaurant_item_path(@restaurant, item) %>
+        <div class="caption">
+          <h3 class="shadow"><%= item.title %></h3>
+          <p class="shadow"><%= item.description %></p>
+          <p class="shadow"><%= item.categories.pluck(:name).join(", ") %></p>
+          <p id="price" class="shadow"> Price:$<%= item.price %></p>
+          <p><%= link_to "Add to Cart", cart_items_path(item: item), method: :post, class: "btn btn-default add-to-cart", role: "button" %></p>
+        </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
   <br><br><br><br><br><br>
   <br><br><br><br><br><br>
   <br><br><br><br><br><br>

@@ -4,29 +4,29 @@ require 'capybara/rspec'
 
 describe 'the application', type: :feature do
   context 'non-loggedin user' do
-    let(:category) { (Category.create(name: "dessert")) }
-    let(:category2) { (Category.create(name: "entree")) }
     before(:each) do
       @restaurant = Restaurant.create(name: "some rest",
                                       description: "some desc")
+      category = @restaurant.categories.create(name: "dinner")
+      category2 = @restaurant.categories.create(name: "lunch")
       Item.create(title: "cheesecake",
                   description: "description",
                   price: 10,
-                  categories: [category],
+                  categories: [category2],
                   restaurant_id: @restaurant.id)
 
       Item.create(title: "burger",
                   description: "description1",
                   price: 50,
-                  categories: [category2],
+                  categories: [category],
                   restaurant_id: @restaurant.id)
 
       visit restaurant_path(@restaurant)
     end
 
-    xit "can organize items by cateories" do
-      within('#categorydessert') do
-        expect(page).to have_content("dessert")
+    it "can organize items by cateories" do
+      within('#categorylunch') do
+        expect(page).to have_content("lunch")
         expect(page).to have_content("cheesecake")
       end
     end
