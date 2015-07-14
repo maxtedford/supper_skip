@@ -17,6 +17,7 @@ describe 'the application', type: :feature do
       @restaurant2 = Restaurant.create(name: "jimmy's",
         description: "yummy food")
       category = @restaurant.categories.create(name: "food")
+      category2 = @restaurant2.categories.create(name: "goodies")
       @item = @restaurant.items.create(title: "some-menu-item",
         description: "delicious",
         price: 10,
@@ -24,7 +25,7 @@ describe 'the application', type: :feature do
       @item2 = @restaurant2.items.create(title: "jimmyburger",
         description: "juicy",
         price: 10,
-        categories: [category])
+        categories: [category2])
       @item3 = @restaurant.items.create(title: "third-item",
         description: "tasty",
         price: 5,
@@ -126,8 +127,11 @@ describe 'the application', type: :feature do
         click_on("Add to Cart")
       end
       visit root_path
+
       click_on(@restaurant2.name)
+      within(".jimmyburger") do
       click_on("Add to Cart")
+      end
       visit cart_items_path
 
       expect(page).to have_content("resto1234")

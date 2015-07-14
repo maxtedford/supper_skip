@@ -9,47 +9,23 @@
   <h2><%= link_to "Orders", restaurant_orders_path(@restaurant) %></h2>
 <% end %>
 <% @restaurant.categories.each do |cat| %>
-  <div id="category<%= cat.name %>">
-    <h2><%= cat.name %></h2>
-    <% cat.items.each do |item| %>
-      <div class="<%= item.title %> thumbnail col-sm-6 col-md-4">
-        <%= link_to (image_tag item.image.url(:medium)), restaurant_item_path(@restaurant, item) %>
-        <div class="caption">
-          <h3 class="shadow"><%= item.title %></h3>
-          <p class="shadow"><%= item.description %></p>
-          <p class="shadow"><%= item.categories.pluck(:name).join(", ") %></p>
-          <p id="price" class="shadow"> Price:$<%= item.price %></p>
-          <p><%= link_to "Add to Cart", cart_items_path(item: item), method: :post, class: "btn btn-default add-to-cart", role: "button" %></p>
-        </div>
+  <h2><%= cat.name %></h2>
+  <% cat.items.each do |item| %>
+    <div class="<%= item.title %> thumbnail col-sm-6 col-md-4">
+      <%= link_to (image_tag item.image.url(:medium)), restaurant_item_path(@restaurant, item) %>
+      <div class="caption">
+        <h3 class="shadow"><%= item.title %></h3>
+        <p class="shadow"><%= item.description %></p>
+        <p class="shadow"><%= item.categories.pluck(:name).join(", ") %></p>
+        <p id="price" class="shadow"> Price:$<%= item.price %></p>
+        <p><%= link_to "Add to Cart", cart_items_path(item: item), method: :post, class: "btn btn-default add-to-cart", role: "button" %></p>
       </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
   <br><br><br><br><br><br>
   <br><br><br><br><br><br>
   <br><br><br><br><br><br>
   <br><br><br><br><br><br>
 <% end %>
 
-<h1>Restaurant Show Page:</h1>
-<h1>Restaurant Name:<%= @restaurant.name %></h1>
-<h1>Restaurant Description:<%= @restaurant.description %></h1>
-<h1>Restaurant Owner:<%#= @restaurant.owner %></h1>
-<% if current_user && Permission.new(current_user).can_edit_restaurant?(@restaurant) %>
-  <h2><%= link_to "Edit Restaurant", edit_restaurant_path(@restaurant) %></h2>
-  <h2><%= link_to "Create Item", new_restaurant_item_path(@restaurant) %></h2>
-  <h2><%= link_to "Categories", restaurant_categories_path(@restaurant) %></h2>
-  <h2><%= link_to "Orders", restaurant_orders_path(@restaurant) %></h2>
-<% end %>
-<% @restaurant.items.each do |item| %>
-  <div class="<%= item.title %> thumbnail col-sm-6 col-md-4">
-    <%= link_to (image_tag item.image.url(:medium)), restaurant_item_path(@restaurant, item) %>
-    <div class="caption">
-      <h3 class="shadow"><%= item.title %></h3>
-      <p class="shadow"><%= item.description %></p>
-      <p class="shadow"><%= item.categories.pluck(:name).join(", ") %></p>
-      <p id="price" class="shadow"> Price:$<%= item.price %></p>
-      <p><%= link_to "Add to Cart", cart_items_path(item: item), method: :post, class: "btn btn-default add-to-cart", role: "button" %></p>
-    </div>
-  </div>
-<%end%>
 
