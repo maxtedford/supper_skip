@@ -11,6 +11,7 @@ describe 'the application', type: :feature do
                     password: "password",
                     password_confirmation: "password" }
       user = User.create(user_data)
+      user.roles.create(name: "owner")
       user_role = Role.create(name: "customer")
       @restaurant = Restaurant.create(name: "resto1234",
                                       description: "descripto1234")

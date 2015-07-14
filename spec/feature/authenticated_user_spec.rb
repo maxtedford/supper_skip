@@ -20,6 +20,7 @@ describe "the authenticated non-administrator", type: :feature do
   end
 
   before(:each) do
+    user.roles.create(name: "owner")
     visit root_path
     fill_in "email address", with: user.email_address
     fill_in "password", with: "password"
@@ -47,7 +48,7 @@ describe "the authenticated non-administrator", type: :feature do
     expect(page).to have_css("span", "category-id-#{item.categories.first.id}")
   end
 
-  it "can add an item to the cart and view the cart" do
+  it "*can add an item to the cart and view the cart" do
     category = restaurant.categories.create(name: "soup")
     item = Item.create!(title: "Mom's Homemade Chili",
                  description: "just like mom made it",
@@ -102,7 +103,7 @@ describe "the authenticated non-administrator", type: :feature do
     end
   end
 
-  it "can logout but not login" do
+  it "*can logout but not login" do
     visit items_path
     expect(page).to_not have_content("Login!")
     find_link("Logout").click
@@ -147,7 +148,7 @@ describe "the authenticated non-administrator", type: :feature do
     expect(page).to_not have_link("Add to Cart")
   end
 
-  it "can view own user info but not other users' info" do
+  it "*can view own user info but not other users' info" do
     user2 = User.create!(name: "Bob", email_address: "bob@example.com", password: "password", password_confirmation: "password")
 
     visit user_path(user)
@@ -161,7 +162,7 @@ describe "the authenticated non-administrator", type: :feature do
     expect(page).to have_content("You can only view your own")
   end
 
-  it "can edit own user info but not other users' info" do
+  it "*can edit own user info but not other users' info" do
     user2 = User.create!(name: "Bob", email_address: "bob@example.com", password: "password", password_confirmation: "password")
 
     visit edit_user_path(user)
@@ -174,7 +175,7 @@ describe "the authenticated non-administrator", type: :feature do
     expect(page).to have_content("You can only view your own")
   end
 
-  it "can view own orders but not other users' orders" do
+  it "*can view own orders but not other users' orders" do
     user2 = User.create!(name: "Bob", email_address: "bob@example.com", password: "password", password_confirmation: "password")
     order3 = Order.create!(user: user2)
     order3.items << item
