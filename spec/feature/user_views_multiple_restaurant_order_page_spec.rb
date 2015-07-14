@@ -37,9 +37,6 @@ describe 'the application', type: :feature do
       click_on "Login!"
     end
 
-    def fill_in_stripe
-    end
-
     it "will display items' restaurants on the order show page" do
       click_on(@restaurant.name)
       within(".some-menu-item") do
@@ -55,7 +52,6 @@ describe 'the application', type: :feature do
       visit cart_items_path
       click_on "Checkout"
       click_button "Update Order"
-      fill_in_stripe
 
       expect(page).to have_content(@restaurant.name)
       expect(page).to have_content(@restaurant2.name)
@@ -95,7 +91,6 @@ describe 'the application', type: :feature do
 
       click_on "Checkout"
       click_on "Update Order"
-      fill_in_stripe
 
       expect(page).to have_content "Restaurant Subtotal"
       expect(page).to have_content "$15"
@@ -120,8 +115,6 @@ describe 'the application', type: :feature do
 
       click_on "Checkout"
       click_on "Update Order"
-      fill_in_stripe
-
 
       expect(page).to have_content("Grand Total: $25")
     end
@@ -142,8 +135,6 @@ describe 'the application', type: :feature do
 
       click_on "Checkout"
       click_on "Update Order"
-      fill_in_stripe
-
 
       expect(page).to have_content("resto1234")
       expect(page).to have_content("jimmy's")
