@@ -11,6 +11,7 @@ describe 'the application', type: :feature do
                     password: "password",
                     password_confirmation: "password" }
       user = User.create(user_data)
+      user.roles.create(name: "owner")
       user_role = Role.create(name: "customer")
       @restaurant = Restaurant.create(name: "resto1234",
                                       description: "descripto1234")
@@ -34,12 +35,12 @@ describe 'the application', type: :feature do
       click_button "Login!"
     end
 
-    it "will show the restaurant on the root page" do
+    it "*will show the restaurant on the root page" do
       expect(page).to have_content("#{@restaurant.name}")
       expect(page).to have_content("#{@restaurant2.name}")
     end
 
-    it "will show each restaurant's menu items on their show pages" do
+    it "*will show each restaurant's menu items on their show pages" do
       click_on("#{@restaurant.name}")
 
       expect(page).to have_content("#{@item.title}")
@@ -50,7 +51,7 @@ describe 'the application', type: :feature do
       expect(page).to have_content("#{@item2.title}")
     end
 
-    it "can add one restaurant item to the cart" do
+    it "*can add one restaurant item to the cart" do
       click_on("#{@restaurant.name}")
       click_on("Add to Cart")
 
@@ -64,7 +65,7 @@ describe 'the application', type: :feature do
       end
     end
 
-    it "can add more than one restaurant item to the cart" do
+    it "*can add more than one restaurant item to the cart" do
       click_on(@restaurant.name)
       click_on("Add to Cart")
 

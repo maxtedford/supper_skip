@@ -8,7 +8,9 @@
 <div id="rest-show">
   <h1>Welcome to <%= @restaurant.name %>!</h1>
   <h1><%= @restaurant.description %></h1>
-  <h1>Owned By:<%#= @restaurant.owner %></h1>
+  <% if @restaurant.owner %>
+    <h1>Owned By:<%= @restaurant.owner %></h1>
+  <% end %>
   <% if current_user && Permission.new(current_user).can_edit_restaurant?(@restaurant) %>
     <h2 class="link"><%= link_to "Edit Restaurant", edit_restaurant_path(@restaurant) %></h2>
     <h2 class="link"><%= link_to "Create Item", new_restaurant_item_path(@restaurant) %></h2>
@@ -19,16 +21,20 @@
   <% @restaurant.categories.each do |cat| %>
     <div id="category<%= cat.name %>">
       <div id="category-block">
-        <h2><%= cat.name %></h2>
+        <div id="header">
+          <h2><%= cat.name %></h2>
+        </div>
         <% cat.items.each do |item| %>
           <div class="<%= item.title %> thumbnail col-sm-6 col-md-4">
-            <%= link_to (image_tag item.image.url(:medium)), restaurant_item_path(@restaurant, item) %>
-            <div class="caption">
-              <h3 class="shadow"><%= item.title %></h3>
-              <p class="shadow"><%= item.description %></p>
-              <p class="shadow"><%= item.categories.pluck(:name).join(", ") %></p>
-              <p id="price" class="shadow"> Price:$<%= item.price %></p>
-              <p><%= link_to "Add to Cart", cart_items_path(item: item), method: :post, class: "btn btn-default add-to-cart", role: "button" %></p>
+            <div id="inner-block">
+              <%= link_to (image_tag item.image.url(:medium)), restaurant_item_path(@restaurant, item) %>
+              <div class="caption">
+                <h3 class="shadow"><%= item.title %></h3>
+                <p class="shadow"><%= item.description %></p>
+                <p class="shadow"><%= item.categories.pluck(:name).join(", ") %></p>
+                <p id="price" class="shadow"> Price:$<%= item.price %></p>
+                <p><%= link_to "Add to Cart", cart_items_path(item: item), method: :post, class: "btn btn-default add-to-cart", role: "button" %></p>
+              </div>
             </div>
           </div>
         <% end %>

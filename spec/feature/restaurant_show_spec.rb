@@ -27,12 +27,26 @@ describe 'the application', type: :feature do
     end
 
     it 'creates and visits a restaurant' do
-      expect(current_path).to eq("/restaurants/some-rest")
-      expect(page).to have_content("some rest")
-      expect(page).to have_content("some desc")
+      user = User.create!(name: "jamie", email_address: "jamie@jamie.com", password: "password", password_confirmation: "password")
+      user.roles.create(name: "owner")
+      rest = Restaurant.create(name: "diner",
+                               description: "american")
+      cat = rest.categories.create(name: "dessert")
+      item = Item.create(title: "cake",
+                         description: "chocolate",
+                         price: 10,
+                         categories: [cat],
+                         restaurant_id: rest.id)
+
+      visit restaurant_path(rest)
+      expect(page).to have_content("cake")
+      expect(page).to have_content("chocolate")
     end
 
     it 'shows items for given restaurant' do
+      user = User.create!(name: "jamie", email_address: "jamie@jamie.com", password: "password", password_confirmation: "password")
+      user.roles.create(name: "owner")
+
       rest = Restaurant.create(name: "diner",
                                description: "american")
       cat = rest.categories.create(name: "dessert")
@@ -50,6 +64,9 @@ describe 'the application', type: :feature do
     end
 
     it 'shows items for given restaurant' do
+      user = User.create!(name: "jamie", email_address: "jamie@jamie.com", password: "password", password_confirmation: "password")
+      user.roles.create(name: "owner")
+
       rest = Restaurant.create(name: "cafeteria",
                                description: "american")
       cat = rest.categories.create(name: "lunch")

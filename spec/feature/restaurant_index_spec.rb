@@ -11,6 +11,8 @@ describe 'the application', type: :feature do
                            description: "other desc" }
       restaurant1 = Restaurant.create(restaurant1_data)
       restaurant2 = Restaurant.create(restaurant2_data)
+      user = User.create!(name: "jamie", email_address: "jamie@jamie.com", password: "password", password_confirmation: "password")
+      user.roles.create(name: "owner")
       end
 
     it 'shows all restaurants on the homepage' do
