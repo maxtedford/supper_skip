@@ -18,11 +18,11 @@
 //= require_tree .
 
 $(document).ready(function(){
-    $(".sidenav").affix({
-        offset: {
-            top: 0
-       }
-    });
+  $(".sidenav").affix({
+    offset: {
+      top: 0
+    }
+  });
 });
 
 $('.dropdown-toggle').dropdown()
@@ -30,16 +30,38 @@ $('.dropdown-toggle').dropdown()
 $(document).ready(function(){
   $('a[href*=#]').click(function() {
     if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
-      && location.hostname == this.hostname) {
-        var $target = $(this.hash);
-        $target = $target.length && $target
+        && location.hostname == this.hostname) {
+      var $target = $(this.hash);
+      $target = $target.length && $target
         || $('[name=' + this.hash.slice(1) +']');
-        if ($target.length) {
-          var targetOffset = $target.offset().top;
-          $('html,body')
+      if ($target.length) {
+        var targetOffset = $target.offset().top;
+        $('html,body')
           .animate({scrollTop: targetOffset}, 1000);
-          return false;
-        }
+        return false;
       }
-    });
+    }
+  });
+  $('.toggleCancelled').click(function() {
+    $('span:not(.cancelled)').toggle();
+  });
+  $('.togglePaid').click(function() {
+    $('span:not(.paid)').toggle();
+  });
+  $('.togglePrepReady').click(function() {
+    $('span:not(.ready_for_preparation)').toggle();
+  });
+  $('.togglePrep').click(function() {
+    $('span:not(.in_preparation)').toggle();
+  });
+  $('.toggleDeliveryReady').click(function() {
+    $('span:not(.ready_for_delivery)').toggle();
+  });
+$('.toggleDelivery').click(function() {
+    $('span:not(.delivery)').toggle();
+  });
+  $('.toggleCompleted').click(function() {
+    $('span:not(.completed)').toggle();
+  });
+
   });
