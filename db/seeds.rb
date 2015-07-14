@@ -12,7 +12,6 @@ entree = Category.create!(name: "Entrees")
 local_game = Category.create!(name: "Local Game")
 dessert = Category.create!(name: "Desserts")
 
-categories = [appetizer, burger, entree, local_game, dessert]
 
 rachel = User.create!({
   name: "Rachel Warbelow",
@@ -217,6 +216,7 @@ order10 = Order.create!(delivery: false,
                         status: "ordered")
 order10.items << lucky_soup
 
+#create 15 restaurants
 restaurants = []
 1.upto(15) do |num|
   restaurants << Restaurant.create!(name: "Restaurant #{num}",
@@ -224,6 +224,7 @@ restaurants = []
   puts "Created Restaurant #{num}"
 end
 
+#create roles
 admin = Role.create(name: "admin")
 puts "Created admin role"
 customer = Role.create(name: "customer")
@@ -235,14 +236,20 @@ roles = [admin, customer, owner]
 
 users = [rachel, josh, jorge, jeff]
 
+categories = [appetizer, burger, entree, local_game, dessert]
+
+#for each restaurant, assign a user, and assign category, and create 15 items
 final_restaurants = restaurants.each do |rest|
   rest.user_roles.create(user: users.sample, role: owner)
-  5.times do |num|
+  rest_categories = categories.map do |cat|
+    rest.categories.create(name: cat.name)
+  end
+  15.times do |num|
     rest.items.create(title: "Item title #{rest.id}-#{num}",
                       description: "Item description #{num}",
-                      price: num+5,
-                      restaurant_id: rest.id,
-                     categories: [categories[num]])
+                        price: num+5,
+                        restaurant_id: rest.id,
+                        categories: [rest_categories.sample])
     puts "Created Item #{num} for Restaurant #{rest.id}"
   end
 end
