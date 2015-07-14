@@ -1,9 +1,13 @@
 class Restaurant::CategoriesController < ApplicationController
-  before_action :load_restaurant, only: [:index, :new, :create, :destroy, :edit, :update]
-  before_action :load_category, only: [:destroy, :edit, :update]
+  before_action :load_restaurant, only: [:index, :new, :create, :destroy, :edit, :update, :show]
+  before_action :load_category, only: [:destroy, :edit, :update, :show]
 
   def index
     @categories = Category.where(restaurant_id: @restaurant.id)
+  end
+
+  def show
+    @items = @category.items
   end
 
   def new

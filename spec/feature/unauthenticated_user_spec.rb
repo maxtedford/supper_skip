@@ -42,10 +42,16 @@ describe 'the unauthenticated user', type: :feature do
   end
 
   it "can add an item to the cart and view the cart" do
-    item
+    category = restaurant.categories.create(name: "food")
+    item = Item.create!(title: "Mom's Homemade Chili",
+    description: "just like mom made it",
+    price: 15.50,
+    restaurant_id: restaurant.id,
+    categories: [category])
+
     visit restaurant_path(restaurant)
     find_link("Add to Cart").click
-    expect(page).to have_content("You have 1 #{item.title}")
+    expect(page).to have_content("You have 1 Mom's Homemade Chili")
     visit cart_items_path
     expect(page).to have_content(item.title)
     expect(page).to have_content("Quantity")
