@@ -16,7 +16,7 @@ describe 'the application', type: :feature do
         description: "descripto1234")
       @restaurant2 = Restaurant.create(name: "jimmy's",
         description: "yummy food")
-      category = Category.create(name: "food")
+      category = @restaurant.categories.create(name: "food")
       @item = @restaurant.items.create(title: "some-menu-item",
         description: "delicious",
         price: 10,
