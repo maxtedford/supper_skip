@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe "the authenticated non-administrator", type: :feature do
   let(:user) { User.create!(name: "Boy George",
-    email_address: "cultureclubforever@eighties.com",
-    password: "password",
-    password_confirmation: "password") }
+                            email_address: "cultureclubforever@eighties.com",
+                            password: "password",
+                            password_confirmation: "password") }
 
   let(:category) { Category.create!(name: "stuff") }
 
@@ -13,10 +13,10 @@ describe "the authenticated non-administrator", type: :feature do
 
   let(:item) do
     Item.create!(title: "Greg's Homemade Chili",
-      description: "just like mom made it",
-      price: 15,
-      categories: [category],
-      restaurant_id: restaurant.id)
+                 description: "just like mom made it",
+                 price: 15,
+                 categories: [category],
+                 restaurant_id: restaurant.id)
   end
 
   before(:each) do
@@ -48,7 +48,12 @@ describe "the authenticated non-administrator", type: :feature do
   end
 
   it "can add an item to the cart and view the cart" do
-    item
+    category = restaurant.categories.create(name: "soup")
+    item = Item.create!(title: "Mom's Homemade Chili",
+                 description: "just like mom made it",
+                 price: 15,
+                 categories: [category],
+                 restaurant_id: restaurant.id)
     visit restaurant_path(restaurant)
     find_link("Add to Cart").click
     expect(page).to have_content("You have 1 #{item.title}")
