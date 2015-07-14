@@ -1,55 +1,64 @@
 <div class="edit-form">
+  <button class='toggleCancelled'>Cancelled</button>
+  <button class='togglePaid'>Paid</button>
+  <button class='togglePrepReady'>Ready for Preperation</button>
+  <button class='togglePrep'>In Preparation</button>
+  <button class='toggleDeliveryReady'>Ready for Delivery</button>
+  <button class='toggleDelivery'>In Delivery</button>
+  <button class='toggleCompleted'>Completed</button>
   <% @restaurant_orders.each do |rest_order| %>
     <% all_items = rest_order.order_items.map { |oi| oi.item } %>
 
     <% grouped_rest_orders = rest_order.order_items.group_by(&:restaurant_id) %>
     <% grouped_rest_orders.each do |resto_id, order_items| %>
+      <span class=<%=rest_order.status%>>
       <% if resto_id %>
-        <h3>Status: <%= rest_order.sanitize_status %></h3>
-        <%= link_to "Mark as Paid", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'pay'}), methods: 'put' if rest_order.may_pay? %> <br>
-        <%= link_to "Mark as Ready For Preparation", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'ready_for_preparation'}), methods: 'put' if rest_order.may_ready_for_preparation? %>
-        <%= link_to "Mark as in Preparation", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'in_preparation'}), methods: 'put' if rest_order.may_in_preparation? %>
-        <%= link_to "Mark as Ready for Delivery", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'ready_for_delivery'}), methods: 'put' if rest_order.may_ready_for_delivery? %>
-        <%= link_to "Mark as Out For Delivery", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'out_for_delivery'}), methods: 'put' if rest_order.may_out_for_delivery? %>
-        <%= link_to "Mark as Completed", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'complete'}), methods: 'put' if rest_order.may_complete? %> <br>
-        <%= link_to "Mark as Cancelled", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'cancel'}), methods: 'put' if rest_order.may_cancel? %> <br><br><br>
+          <h3>Status: <%= rest_order.sanitize_status %></h3>
+          <%= link_to "Mark as Paid", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'pay'}), methods: 'put' if rest_order.may_pay? %>
+          <%= link_to "Mark as Ready For Preparation", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'ready_for_preparation'}), methods: 'put' if rest_order.may_ready_for_preparation? %>
+          <%= link_to "Mark as in Preparation", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'in_preparation'}), methods: 'put' if rest_order.may_in_preparation? %>
+          <%= link_to "Mark as Ready for Delivery", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'ready_for_delivery'}), methods: 'put' if rest_order.may_ready_for_delivery? %>
+          <%= link_to "Mark as Out For Delivery", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'out_for_delivery'}), methods: 'put' if rest_order.may_out_for_delivery? %>
+          <%= link_to "Mark as Completed", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'complete'}), methods: 'put' if rest_order.may_complete? %>
+          <%= link_to "Mark as Cancelled", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'cancel'}), methods: 'put' if rest_order.may_cancel? %> <br><br><br>
 
-        <table class="table table-hover">
-          <thead>
-            <th>Item</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>User</th>
-            <th>Item Subtotal</th>
-          </thead>
-          <tbody>
-            <% items = order_items.map { |oi| oi.item } %>
-            <% items.uniq.each do |item| %>
-              <tr class="cart_item cart_item_<%= item.id %>">
-                <td class="title"><%=link_to item.title, item_path(item) %></td>
-                <td class="price">$<%= item.price %></td>
-                <td class="quantity">
-                  <div class="float_left"><%= (rest_order.subtotal(item)/item.price).to_i %></div>
-                </td>
-                <td class="user"><%= rest_order.order_items.last.order.user.name %></td>
-                <td class="subtotal">$<%= rest_order.subtotal(item) %></td>
+          <table class="table table-hover">
+            <thead>
+              <th>Item</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>User</th>
+              <th>Item Subtotal</th>
+            </thead>
+            <tbody>
+              <% items = order_items.map { |oi| oi.item } %>
+              <% items.uniq.each do |item| %>
+                <tr class="cart_item cart_item_<%= item.id %>">
+                  <td class="title"><%=link_to item.title, item_path(item) %></td>
+                  <td class="price">$<%= item.price %></td>
+                  <td class="quantity">
+                    <div class="float_left"><%= (rest_order.subtotal(item)/item.price).to_i %></div>
+                  </td>
+                  <td class="user"><%= rest_order.order_items.last.order.user.name %></td>
+                  <td class="subtotal">$<%= rest_order.subtotal(item) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
-            <% end %>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tfoot>
-        </table>
+            </tfoot>
+          </table>
+        <% end %>
       <% end %>
+      <% unless all_items.uniq.map { |item| rest_order.subtotal(item) }.inject(:+).to_i == 0 %>
+        Grand Total: $<%= all_items.uniq.map { |item| rest_order.subtotal(item) }.inject(:+).to_i %>
+      </span>
     <% end %>
-    <% unless all_items.uniq.map { |item| rest_order.subtotal(item) }.inject(:+).to_i == 0 %>
-      Grand Total: $<%= all_items.uniq.map { |item| rest_order.subtotal(item) }.inject(:+).to_i %>
-  <% end %>
-  <br>
-<% end %>
+    <br>
+      <% end %>
 </div>
 
