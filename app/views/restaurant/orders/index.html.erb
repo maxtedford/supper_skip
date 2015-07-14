@@ -7,6 +7,10 @@
       <% if resto_id %>
         <h3>Status: <%= rest_order.status %></h3>
         <%= link_to "Mark as Paid", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'pay'}), methods: 'put' if rest_order.may_pay? %> <br>
+        <%= link_to "Mark as Ready For Preparation", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'ready_for_preparation'}), methods: 'put' if rest_order.may_ready_for_preparation? %> <br>
+        <%= link_to "Mark as in Preparation", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'in_preparation'}), methods: 'put' if rest_order.may_in_preparation? %> <br>
+        <%= link_to "Mark as Ready for Delivery", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'ready_for_delivery'}), methods: 'put' if rest_order.may_ready_for_delivery? %> <br>
+        <%= link_to "Mark as Out For Delivery", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'out_for_delivery'}), methods: 'put' if rest_order.may_out_for_delivery? %> <br>
         <%= link_to "Mark as Completed", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'complete'}), methods: 'put' if rest_order.may_complete? %> <br>
         <%= link_to "Mark as Cancelled", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'cancel'}), methods: 'put' if rest_order.may_cancel? %> <br><br><br>
 
@@ -48,4 +52,18 @@
   <br>
 <% end %>
 </div>
-
+    when 'pay'
+      self.pay!
+    when 'ready_for_preparation'
+      self.ready_for_preparation!
+    when 'in_preparation'
+      self.in_preparation!
+    when 'ready_for_delivery'
+      self.ready_for_delivery!
+    when 'out_for_delivery'
+      self.out_for_delivery!
+    when 'complete'
+      self.complete!
+    when 'cancel'
+      self.cancel!
+      end

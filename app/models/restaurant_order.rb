@@ -5,12 +5,12 @@ class RestaurantOrder < ActiveRecord::Base
   has_many :order_items
   has_many :items, through: :order_items
 
-  enum status: %w(ordered paid cancelled completed)
+  enum status: %w(ordered paid ready_for_preparation cancelled in_preparation ready_for_delivery out_for_delivery completed)
 
   aasm column: :status do
     # each state has a predicate method we can use to check status, like .in_cart?
-    state :in_cart, initial: true
-    state :ordered
+    #state :in_cart, initial: true
+    state :ordered, initial: true
     state :paid
     state :ready_for_preparation
     state :cancelled
@@ -20,32 +20,32 @@ class RestaurantOrder < ActiveRecord::Base
     state :completed
 
     # events give us bang methods, like place! for changing order status
-    event :place do
-      transitions from: :in_cart, to: :ordered, guard: :no_retired_items?
-    end
+    #event :place do
+     # transitions from: :in_cart, to: :ordered, guard: :no_retired_items?
+    #end
 
     event :pay do
       transitions from: :ordered, to: :paid
     end
 
-    event :ready_for_prep do
-      transitions from: [:paid], to: :ready_for_preparation
-    end
-
-    event :start_prep do
-      transitions from: [:ready_for_preparation], to: :in_preparation
-    end
-
-    event :ready_for_delivery do
-      transitions from: [:start_prep], to: :ready_for_delivery
-    end
-
-    event :start_delivery do
-      transitions from: [:ready_for_delivert], to: :out_for_delivery
+    event :ready_for_preparation do
+      transitions from: :paid, to: :ready_for_preparation
     end
 
     event :cancel do
       transitions from: [:ordered, :paid, :ready_for_preparation], to: :cancelled
+    end
+
+    event :in_preparation do
+      transitions from: [:ready_for_preparation], to: :in_preparation
+    end
+
+    event :ready_for_delivery do
+      transitions from: [:start_preparation], to: :ready_for_delivery
+    end
+
+    event :out_for_delivery do
+      transitions from: [:ready_for_delivery], to: :out_for_delivery
     end
 
     event :complete do
@@ -76,10 +76,20 @@ class RestaurantOrder < ActiveRecord::Base
     case params[:status]
     when 'pay'
       self.pay!
-    when 'cancel'
-      self.cancel!
+    when 'ready_for_preparation'
+      self.ready_for_preparation!
+    when 'in_preparation'
+      self.in_preparation!
+    when 'ready_for_delivery'
+      self.ready_for_delivery!
+    when 'out_for_delivery'
+      self.out_for_delivery!
     when 'complete'
       self.complete!
+    when 'cancel'
+      self.cancel!
     end
   end
 end
+
+
