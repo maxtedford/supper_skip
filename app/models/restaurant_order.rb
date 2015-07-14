@@ -41,7 +41,7 @@ class RestaurantOrder < ActiveRecord::Base
     end
 
     event :ready_for_delivery do
-      transitions from: [:start_preparation], to: :ready_for_delivery
+      transitions from: [:in_preparation], to: :ready_for_delivery
     end
 
     event :out_for_delivery do
@@ -49,7 +49,7 @@ class RestaurantOrder < ActiveRecord::Base
     end
 
     event :complete do
-      transitions from: :paid, to: :completed
+      transitions from: :out_for_delivery, to: :completed
     end
   end
 
@@ -89,6 +89,10 @@ class RestaurantOrder < ActiveRecord::Base
     when 'cancel'
       self.cancel!
     end
+  end
+
+  def sanitize_status
+    self.status.gsub('_', ' ').capitalize
   end
 end
 

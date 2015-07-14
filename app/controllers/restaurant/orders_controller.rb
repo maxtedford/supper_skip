@@ -8,7 +8,7 @@ class Restaurant::OrdersController < ApplicationController
 
   def edit
     if @restaurant_order.update_status(valid_params)
-      redirect_to restaurant_order_path
+      redirect_to restaurant_path(@restaurant)
     else
       redirect_to restaurant_order_path, alert: "Order status updated"
     end
