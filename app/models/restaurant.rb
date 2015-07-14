@@ -23,7 +23,9 @@ class Restaurant < ActiveRecord::Base
   end
 
   def owner
+    if  user_roles.find_by(role_id: Role.find_by(name: "owner").id)
     owner_id = user_roles.find_by(role_id: Role.find_by(name: "owner").id).user_id
     User.find(owner_id).name
+    end
   end
 end
