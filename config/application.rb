@@ -20,8 +20,8 @@ module DinnerDash
       address:              'smtp.mandrillapp.com',
       port:                 '587',
       domain:               'supper-sprint.herokuapp.com',
-      user_name:            "max.tedford@gmail.com",
-      password:             "-aGKRulKREE6dR5WoDUGlg",
+      user_name:            ENV["EMAIL"],
+      password:             ENV["PASSWORD"],
       authentication:       'plain',
       enable_starttls_auto: true
     }
