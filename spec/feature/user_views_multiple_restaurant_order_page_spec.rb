@@ -16,8 +16,6 @@ describe 'the application', type: :feature do
                                       description: "descripto1234")
       @restaurant2 = Restaurant.create(name: "jimmy's",
                                        description: "yummy food")
-      category = Category.create(name: "food")
-        description: "yummy food")
       category = @restaurant.categories.create(name: "food")
       category2 = @restaurant2.categories.create(name: "food")
       @item = @restaurant.items.create(title: "some-menu-item",
@@ -27,10 +25,8 @@ describe 'the application', type: :feature do
       @item2 = @restaurant2.items.create(title: "jimmyburger",
                                          description: "juicy",
                                          price: 10,
-                                         categories: [category])
-        description: "juicy",
-        price: 10,
-        categories: [category2])
+                                         categories: [category2])
+
       @item3 = @restaurant.items.create(title: "third-item",
                                         description: "tasty",
                                         price: 5,
