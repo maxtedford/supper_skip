@@ -38,10 +38,6 @@ describe 'the application', type: :feature do
     end
 
     def fill_in_stripe
-      fill_in "email_input", with: "lev@dev.com"
-      fill_in "Card number", with: "4242424242424242"
-      fill_in "cardExpiresInput", with: "01/2048"
-      fill_in "cardCVCInput", with: "123"
     end
 
     it "will display items' restaurants on the order show page" do
@@ -58,7 +54,7 @@ describe 'the application', type: :feature do
 
       visit cart_items_path
       click_on "Checkout"
-      click_button "Pay with Card"
+      click_button "Update Order"
       fill_in_stripe
 
       expect(page).to have_content(@restaurant.name)
@@ -98,7 +94,7 @@ describe 'the application', type: :feature do
       expect(page).to have_content "$15"
 
       click_on "Checkout"
-      click_on "Pay with Card"
+      click_on "Update Order"
       fill_in_stripe
 
       expect(page).to have_content "Restaurant Subtotal"
@@ -123,7 +119,7 @@ describe 'the application', type: :feature do
       expect(page).to have_content("Grand Total: $25")
 
       click_on "Checkout"
-      click_on "Pay with Card"
+      click_on "Update Order"
       fill_in_stripe
 
 
@@ -145,7 +141,7 @@ describe 'the application', type: :feature do
       expect(page).to have_content("jimmy's")
 
       click_on "Checkout"
-      click_on "Pay with Card"
+      click_on "Update Order"
       fill_in_stripe
 
 
