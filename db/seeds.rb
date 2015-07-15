@@ -12,7 +12,6 @@ entree = Category.create!(name: "Entrees")
 local_game = Category.create!(name: "Local Game")
 dessert = Category.create!(name: "Desserts")
 
-
 rachel = User.create!({
   name: "Rachel Warbelow",
   email_address: "demo+rachel@jumpstartlab.com",
@@ -225,14 +224,14 @@ restaurants = []
 end
 
 #create roles
-admin = Role.create(name: "admin")
-puts "Created admin role"
-customer = Role.create(name: "customer")
-puts "Created customer role"
+delivery = Role.create(name: "delivery")
+puts "Created delivery role"
+cook = Role.create(name: "cook")
+puts "Created cook role"
 owner = Role.create(name: "owner")
 puts "Created owner role"
 
-roles = [admin, customer, owner]
+roles = [delivery, cook, owner]
 
 users = [rachel, josh, jorge, jeff]
 
