@@ -5,13 +5,12 @@ class RestaurantOrder < ActiveRecord::Base
   has_many :order_items
   has_many :items, through: :order_items
 
-  enum status: %w(ordered paid ready_for_preparation cancelled in_preparation ready_for_delivery out_for_delivery completed)
+  enum status: %w(ordered ready_for_preparation cancelled in_preparation ready_for_delivery out_for_delivery completed)
 
   aasm column: :status do
     # each state has a predicate method we can use to check status, like .in_cart?
     #state :in_cart, initial: true
     state :ordered, initial: true
-    state :paid
     state :ready_for_preparation
     state :cancelled
     state :in_preparation
@@ -24,16 +23,12 @@ class RestaurantOrder < ActiveRecord::Base
      # transitions from: :in_cart, to: :ordered, guard: :no_retired_items?
     #end
 
-    event :pay do
-      transitions from: :ordered, to: :paid
-    end
-
     event :ready_for_preparation do
-      transitions from: :paid, to: :ready_for_preparation
+      transitions from: :ordered, to: :ready_for_preparation
     end
 
     event :cancel do
-      transitions from: [:ordered, :paid, :ready_for_preparation], to: :cancelled
+      transitions from: [:ordered, :ready_for_preparation], to: :cancelled
     end
 
     event :in_preparation do
