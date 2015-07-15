@@ -18,8 +18,8 @@
           <%= link_to "Mark as Ready For Preparation", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'ready_for_preparation'}), methods: 'put' if rest_order.may_ready_for_preparation? %>
           <%= link_to "Prepare this order", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'in_preparation'}), methods: 'put' if rest_order.may_in_preparation? && current_user.verify?("cook", Restaurant.find(resto_id)) %>
           <%= link_to "Ready for Delivery", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'ready_for_delivery'}), methods: 'put' if rest_order.may_ready_for_delivery? && current_user.verify?("cook", Restaurant.find(resto_id)) %>
-          <%= link_to "Deliver this order", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'out_for_delivery'}), methods: 'put' if rest_order.may_out_for_delivery? && current_user.verify?("deliverer", Restaurant.find(resto_id)) %>
-          <%= link_to "Mark as Delivered", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'complete'}), methods: 'put' if rest_order.may_complete? && current_user.verify?("deliverer", Restaurant.find(resto_id)) %>
+          <%= link_to "Deliver this order", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'out_for_delivery'}), methods: 'put' if rest_order.may_out_for_delivery? && current_user.verify?("delivery", Restaurant.find(resto_id)) %>
+          <%= link_to "Mark as Delivered", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'complete'}), methods: 'put' if rest_order.may_complete? && current_user.verify?("delivery", Restaurant.find(resto_id)) %>
           <%= link_to "Mark as Cancelled", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'cancel'}), methods: 'put' if rest_order.may_cancel? && current_user.verify?("owner", Restaurant.find(resto_id)) %> <br>
 
           <table class="table table-hover">
