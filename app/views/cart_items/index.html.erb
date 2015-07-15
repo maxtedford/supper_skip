@@ -55,64 +55,46 @@
     <% end %>
     Grand Total: $<%= all_items.uniq.map { |item| @cart.subtotal(item) }.inject(:+).to_i %>
 
-  <div class="checkout-button">
-    <% if current_user %>
-      <%= link_to "Checkout", edit_order_path(@cart.order), class: 'btn btn-default' %>
-    <% else %>
-      <%= link_to "Checkout", login_path, class: 'btn btn-default' %>
-    <% end %>
-  <% else %>
-
-    <div class="edit-form">
-      <table class="table table-hover">
-        <thead>
-          <th>Restaurant</th>
-          <th>Item</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Subtotal</th>
-        </thead>
-        <tbody>
-          <% @cart.each do |item| %>
-            <tr class="cart_item cart_item_<%= item.id %>">
-              <% if item.restaurant %>
-                <td class="restaurant"><%= item.restaurant.name %></td>
+  <div class="edit-form">
+    <table class="table table-hover">
+      <thead>
+        <th>Restaurant</th>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+      </thead>
+      <tbody>
+        <% @cart.each do |item| %>
+          <tr class="cart_item cart_item_<%= item.id %>">
+            <% if item.restaurant %>
+              <td class="restaurant"><%= item.restaurant.name %></td>
+            <% end %>
+            <td class="title"><%= item.title %></td>
+            <td class="price">$<%= item.price %></td>
+            <td class="quantity">
+              <%= button_to cart_item_path(item), method: :put, class: "btn btn-xs decrease float_left", name: "decrease" do %>
+                <span class="glyphicon glyphicon-minus"></span>
               <% end %>
-              <td class="title"><%= item.title %></td>
-              <td class="price">$<%= item.price %></td>
-              <td class="quantity">
-                <%= button_to cart_item_path(item), method: :put, class: "btn btn-xs decrease float_left", name: "decrease" do %>
-                  <span class="glyphicon glyphicon-minus"></span>
-                <% end %>
-                <div class="float_left"><%= item.quantity %></div>
-                <%= button_to cart_item_path(item), method: :put, class: "btn btn-xs increase float_left", name: "increase" do %>
-                  <span class="glyphicon glyphicon-plus"></span>
-                <% end %>
-              </td>
-              <td class="subtotal">$<%= @cart.subtotal(item) %></td>
-              <td> <%= button_to "Remove", cart_item_path(id: item), method: :delete %> </td>
-            </tr>
-          <% end %>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>Total: $<%= @cart.total_cost %></td>
+              <div class="float_left"><%= item.quantity %></div>
+              <%= button_to cart_item_path(item), method: :put, class: "btn btn-xs increase float_left", name: "increase" do %>
+                <span class="glyphicon glyphicon-plus"></span>
+              <% end %>
+            </td>
+            <td class="subtotal">$<%= @cart.subtotal(item) %></td>
+            <td> <%= button_to "Remove", cart_item_path(id: item), method: :delete %> </td>
           </tr>
-        </tfoot>
-      </table>
-
-      <div class="checkout-button">
-        <% if current_user && (@cart.total_items > 0) %>
-          <%= link_to "Checkout", edit_order_path(@cart.order), class: 'btn btn-default' %>
-        <% elsif current_user && (@cart.total_items == 0) %>
-          <h3>Your cart is empty</h3>
-        <% elsif @cart.total_items > 0 %>
-          <%= link_to "Checkout", login_path, class: 'btn btn-default' %>
         <% end %>
-      </div>
-    <% end %>
-    </div>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>Total: $<%= @cart.total_cost %></td>
+        </tr>
+      </tfoot>
+    </table>
+  <% end %>
+  </div>
   </div>
