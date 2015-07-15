@@ -9,7 +9,7 @@ class UserRolesController < ApplicationController
     @user = User.find_by(email_address: params[:user_role][:user_id])
     if @user.nil?
       @user = User.create(name: "New User", email_address: user_role_params[:user_id], password: "#{SecureRandom.urlsafe_base64}")
-      params[:user_role][:user_id] = @user.id.to_s
+      params[:user_role][:user_id] = @user.id
       @user_role = UserRole.new(user_role_params)
       if @user_role.save
         flash[:message] = "You have successfully added #{@user.name} as '#{@user.user_roles.map(&:role).last.name}'"
@@ -20,7 +20,7 @@ class UserRolesController < ApplicationController
         render :new
       end
     else
-      params[:user_role][:user_id] = @user.id.to_s
+      params[:user_role][:user_id] = @user.id
       @user_role = UserRole.new(user_role_params)
       if @user_role.save
         flash[:message] = "You have successfully added #{@user.name} as '#{@user.user_roles.map(&:role).last.name}'"
