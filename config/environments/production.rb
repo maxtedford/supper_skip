@@ -70,7 +70,7 @@ Rails.application.configure do
     user_name: ENV["EMAIL"],
     password: ENV["PASSWORD"],
     :authentication => 'login',
-    :domain => 'supper-spring.herokuapp.com',
+    :domain => 'supper-sprint.herokuapp.com',
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
