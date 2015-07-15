@@ -10,14 +10,14 @@
   <h1>Welcome to <%= @restaurant.name %>!</h1>
   <h1><%= @restaurant.description %></h1>
   <% if @restaurant.owner %>
-    <h1>Owned By:<%= @restaurant.owner %></h1>
+    <h1>Owned By: <%= @restaurant.owner %></h1>
   <% end %>
   <% if current_user && Permission.new(current_user).can_edit_restaurant?(@restaurant) %>
-    <h2 class="link"><%= link_to "Edit Restaurant", edit_restaurant_path(@restaurant) %></h2>
-    <h2 class="link"><%= link_to "Create Item", new_restaurant_item_path(@restaurant) %></h2>
-    <h2 class="link"><%= link_to "Categories", restaurant_categories_path(@restaurant) %></h2>
-    <h2 class="link"><%= link_to "Orders", restaurant_orders_path(@restaurant) %></h2>
-    <h2 class="link"><%= link_to "Add User", new_user_role_path(restaurant_id: @restaurant.id) %></h2>
+    <h3 class="link"><%= link_to "Edit Restaurant", edit_restaurant_path(@restaurant) %></h3>
+    <h3 class="link"><%= link_to "Create Item", new_restaurant_item_path(@restaurant) %></h3>
+    <h3 class="link"><%= link_to "Categories", restaurant_categories_path(@restaurant) %></h3>
+    <h3 class="link"><%= link_to "Orders", restaurant_orders_path(@restaurant) %></h3>
+    <h3 class="link"><%= link_to "Add User", new_user_role_path(restaurant_id: @restaurant.id) %></h3>
   <% end %>
   <% @restaurant.categories.each do |cat| %>
     <% if cat.items.count > 0 %>
