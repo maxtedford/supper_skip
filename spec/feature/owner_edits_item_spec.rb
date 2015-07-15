@@ -18,7 +18,7 @@ describe 'the application', type: :feature do
 
       user.user_roles.create(role: role, restaurant: restaurant)
 
-      category = Category.create!(name: "entrees")
+      category = restaurant.categories.create!(name: "entrees")
 
       item = restaurant.items.create!(title: "burger",
                                       description: "juicy",
@@ -41,7 +41,9 @@ describe 'the application', type: :feature do
 
       click_button "Edit"
       fill_in "Title", with: "sandwich"
+      check("entrees")
       click_on "Update"
+
 
       expect(current_path).to eq(restaurant_path(restaurant))
       expect(page).to have_content("sandwich")
