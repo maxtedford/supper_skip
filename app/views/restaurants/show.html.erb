@@ -12,7 +12,7 @@
   <% if @restaurant.owner %>
     <h1>Owned By: <%= @restaurant.owner %></h1>
   <% end %>
-  <% if current_user && Permission.new(current_user).can_edit_restaurant?(@restaurant) %>
+  <% if current_user && current_user.verify?("owner", @restaurant) || current_user.verify?("cook", @restaurant) ||  current_user.verify?("deliverer", @restaurant) %>
     <h3 class="link"><%= link_to "Edit Restaurant", edit_restaurant_path(@restaurant) %></h3>
     <h3 class="link"><%= link_to "Create Item", new_restaurant_item_path(@restaurant) %></h3>
     <h3 class="link"><%= link_to "Categories", restaurant_categories_path(@restaurant) %></h3>
