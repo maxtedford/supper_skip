@@ -15,7 +15,6 @@
         <% if resto_id %>
           <br><br><br>
           <h4>Status: <%= rest_order.sanitize_status %></h4>
-          <%= link_to "Mark as Paid", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'pay'}), methods: 'put' if rest_order.may_pay? %>
           <%= link_to "Mark as Ready For Preparation", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'ready_for_preparation'}), methods: 'put' if rest_order.may_ready_for_preparation? %>
           <%= link_to "Mark as in Preparation", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'in_preparation'}), methods: 'put' if rest_order.may_in_preparation? %>
           <%= link_to "Mark as Ready for Delivery", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'ready_for_delivery'}), methods: 'put' if rest_order.may_ready_for_delivery? %>

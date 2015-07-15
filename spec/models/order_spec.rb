@@ -59,12 +59,6 @@ describe Order do
       expect { order.place }.to raise_error
     end
 
-    it "changes to paid when paid" do
-      order = Order.create!(user: user, status: "ordered")
-      order.pay!
-      expect(order.status).to eq("paid")
-    end
-
     it "changes to cancelled when cancelled" do
       order = Order.create!(user: user, status: "ordered")
       order.cancel!
@@ -73,19 +67,16 @@ describe Order do
 
     it "can only change from ordered or paid to cancelled" do
       ordered_order = Order.create!(user: user, status: "ordered")
-      paid_order = Order.create!(user: user, status: "paid")
       completed_order = Order.create!(user: user, status: "completed")
 
       ordered_order.cancel!
-      paid_order.cancel!
       expect(ordered_order.status).to eq("cancelled")
-      expect(paid_order.status).to eq("cancelled")
 
       expect{ completed_order.cancel! }.to raise_error
     end
 
     it "changes to completed when completed" do
-      order = Order.create!(user: user, status: "paid")
+      order = Order.create!(user: user, status: "out_for_delivery")
       order.complete!
       expect(order.status).to eq("completed")
     end
@@ -96,7 +87,7 @@ describe Order do
       restaurant = Restaurant.create!(name: "Resto666", description: "good food")
       item = Item.create!(title: "foo", description: "bar", price: 1, categories: [category], retired: true, restaurant_id: restaurant.id)
       order = Order.create!(user: user)
-      2.times do 
+      2.times do
         order.items << item
       end
       order.update_quantities
@@ -166,7 +157,7 @@ describe Order do
     end
 
     it "can identify editable orders" do
-      editable_order = Order.create!(user: user, status: "paid")
+      editable_order = Order.create!(user: user, status: "ordered")
       non_editable_order = Order.create!(user: user, status: "completed")
       expect(editable_order.editable?).to eq true
       expect(non_editable_order.editable?).to eq false
