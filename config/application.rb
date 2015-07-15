@@ -17,7 +17,7 @@ module DinnerDash
   class Application < Rails::Application
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-      address:              'supper-sprint.herokuapp.com',
+      address:              'smtp.mandrillapp.com',
       port:                 '587',
       domain:               'supper-sprint.herokuapp.com',
       user_name:            ENV["EMAIL"],
