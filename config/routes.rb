@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   
   get '/registration', to: 'registrations#new'
   post '/registration', to: 'registrations#create'
-  
 
   get 'code', to: redirect('https://github.com/larsonkonr/dinner_dash')
   root 'restaurants#index'
