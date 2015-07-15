@@ -12,7 +12,7 @@
     <% grouped_rest_orders = rest_order.order_items.group_by(&:restaurant_id) %>
     <% grouped_rest_orders.each do |resto_id, order_items| %>
       <span class=<%=rest_order.status%>>
-        <% if resto_id %>
+        <% if resto_id && current_user %>
           <br><br><br>
           <h4>Status: <%= rest_order.sanitize_status %></h4>
           <%= link_to "Mark as Ready For Preparation", edit_restaurant_order_path(rest_order.restaurant, rest_order, restaurant_order: {status: 'ready_for_preparation'}), methods: 'put' if rest_order.may_ready_for_preparation? %>
