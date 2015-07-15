@@ -1,8 +1,8 @@
 <h1>Hello!</h1>
 
 <p>
-  You've been invited to join Crossroads Lodge! Please click on the link below to register your account as a
-  <%= @user.user_roles.map(&:role).last.name %> for <%= @user.user_roles.map(&:restaurant).last.name %>.
+  You've been invited to join Crossroads Lodge! Please click on the link below to register your account as
+  <%= @user.added_role %> for <%= @user.added_restaurant %>.
 </p>
 <br>
 

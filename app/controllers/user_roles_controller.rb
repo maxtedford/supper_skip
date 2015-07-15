@@ -8,35 +8,41 @@ class UserRolesController < ApplicationController
   def create
     @user = User.find_by(email_address: params[:user_role][:user_id])
     if @user.nil?
-      @user = User.create(name: "New User", email_address: user_role_params[:user_id], password: "#{SecureRandom.urlsafe_base64}")
-      params[:user_role][:user_id] = @user.id
-      @user_role = UserRole.new(user_role_params)
-      if @user_role.save
-        flash[:message] = "You have successfully added #{@user.name} as '#{@user.user_roles.map(&:role).last.name}'"
-        redirect_to restaurant_path(@user_role.restaurant)
-        NotificationMailer.user_signup(@user).deliver
-      else
-        flash.now[:errors] = @user_role.errors.full_messages.join(", ")
-        render :new
-      end
+      create_and_send_email
     else
-      params[:user_role][:user_id] = @user.id
-      @user_role = UserRole.new(user_role_params)
-      if @user_role.save
-        flash[:message] = "You have successfully added #{@user.name} as '#{@user.user_roles.map(&:role).last.name}'"
-        redirect_to restaurant_path(@user_role.restaurant)
-      else
-        flash.now[:errors] = @user_role.errors.full_messages.join(", ")
-        render :new
-      end
+      assign_without_email(@user)
     end
   end
-  
   
   private
   
   def user_role_params
     params.require(:user_role).permit(:user_id, :restaurant_id, :role_id)
   end
+  
+  def create_and_send_email
+    user = User.create(name: "New User", email_address: user_role_params[:user_id], password: "#{SecureRandom.urlsafe_base64}")
+    params[:user_role][:user_id] = user.id
+    user_role = UserRole.new(user_role_params)
+    if user_role.save
+      flash[:message] = "You have successfully added #{user.name} as '#{user.user_roles.map(&:role).last.name}'"
+      redirect_to restaurant_path(user_role.restaurant)
+      NotificationMailer.user_signup(user).deliver
+    else
+      flash.now[:errors] = user_role.errors.full_messages.join(", ")
+      render :new
+    end
+  end
+  
+  def assign_without_email(user)
+    params[:user_role][:user_id] = user.id
+    user_role = UserRole.new(user_role_params)
+    if user_role.save
+      flash[:message] = "You have successfully added #{user.name} as '#{user.user_roles.map(&:role).last.name}'"
+      redirect_to restaurant_path(user_role.restaurant)
+    else
+      flash.now[:errors] = user_role.errors.full_messages.join(", ")
+      render :new
+    end
+  end
 end
-
