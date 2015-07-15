@@ -1,5 +1,7 @@
 class Restaurant::ItemsController < ApplicationController
   before_action :load_restaurant
+  before_action :authorize!, only: [:edit]
+  
   def show
     @item = @restaurant.items.find(params[:id])
   end
@@ -53,6 +55,13 @@ class Restaurant::ItemsController < ApplicationController
 
   def load_restaurant
     @restaurant = Restaurant.find_by(slug: params[:restaurant_id])
+  end
+
+  def authorize!
+    unless Permission.new(current_user).can_edit_restaurant?(@restaurant)
+      flash[:notice] = "Can't let you do that, #{current_user.name}!"
+      redirect_to root_path
+    end
   end
 end
 
