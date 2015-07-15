@@ -38,7 +38,7 @@ josh = User.create!({ name: "Josh Cheek",
                       password: "password",
                       password_confirmation: "password",
                       display_name: "josh",
-                      admin: true })
+                      admin: false })
 
 appetizers = [
   deviled_quail_eggs = Item.create!(title: "Deviled Quail Eggs",
