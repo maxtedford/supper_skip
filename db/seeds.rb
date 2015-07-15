@@ -11,6 +11,7 @@ burger = Category.create!(name: "Burgers")
 entree = Category.create!(name: "Entrees")
 local_game = Category.create!(name: "Local Game")
 dessert = Category.create!(name: "Desserts")
+all = Category.create!(name: "All")
 
 
 rachel = User.create!({

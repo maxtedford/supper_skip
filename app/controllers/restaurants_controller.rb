@@ -10,6 +10,7 @@ class RestaurantsController < ApplicationController
   def create
     @restaurant = Restaurant.new(restaurant_params)
     if @restaurant.save
+      @restaurant.categories.create(name: "All")
       assign_owner
       redirect_to "/restaurants/#{@restaurant.slug.downcase}"
       flash[:message] = "#{@restaurant.name} has been registered"
