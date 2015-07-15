@@ -23,6 +23,7 @@ class SessionsController < ApplicationController
   end
 
   private
+  
   def convert_cart(user, session)
     return if session[:order_id] || !session[:cart].present?
     order = CartOrderConverter.convert(@cart.to_h, user)
