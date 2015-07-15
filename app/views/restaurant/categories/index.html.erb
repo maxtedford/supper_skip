@@ -1,3 +1,4 @@
+<%= link_to "Back to your Restaurant", restaurant_path(@categories.last.restaurant) %>
 <h2>Categories:</h2>
 <% @categories.each do |category| %>
   <h3><%= category.name %></h3><%= link_to "Delete", restaurant_category_path(category, restaurant_id: params[:restaurant_id]), method: :delete %> | <%= link_to "Edit", edit_restaurant_category_path(category, restaurant_id: params[:restaurant_id]) %>
