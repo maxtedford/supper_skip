@@ -6,9 +6,10 @@ describe 'the application', type: :feature do
   context 'non-loggedin user' do
     before(:each) do
       user = User.create!(name: "jamie", email_address: "jamie@jamie.com", password: "password", password_confirmation: "password")
-      user.roles.create(name: "owner")
-      @restaurant = Restaurant.create(name: "some rest",
+      role = Role.create!(name: "owner")
+      @restaurant = Restaurant.create!(name: "some rest",
                                       description: "some desc")
+      user.user_roles.create!(role: role, restaurant: @restaurant)
       category = @restaurant.categories.create(name: "dinner")
       category2 = @restaurant.categories.create(name: "lunch")
       Item.create(title: "cheesecake",
