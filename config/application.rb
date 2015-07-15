@@ -17,11 +17,11 @@ module DinnerDash
   class Application < Rails::Application
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-      address:              'smtp.mandrillapp.com',
+      address:              'localhost:3000',
       port:                 '587',
       domain:               'supper-sprint.herokuapp.com',
-      user_name:            ENV["EMAIL"],
-      password:             ENV["PASSWORD"],
+      user_name:            "max.tedford@gmail.com",
+      password:             "-aGKRulKREE6dR5WoDUGlg",
       authentication:       'plain',
       enable_starttls_auto: true
     }
