@@ -98,6 +98,27 @@ describe 'the unauthenticated user', type: :feature do
       expect(page).to have_content("1")
     end
   end
+  
+  it 'signs up without clearing the cart' do
+    item
+    user = User.create!(user_attributes)
+    user.roles.create(name: "owner")
+    visit items_path
+    find_link("Add to Cart").click
+    find_link("Sign Up").click
+    fill_in "user[name]", with: user.name
+    fill_in "user[email_address]", with: user.email_address
+    fill_in "user[password]", with: "password"
+    fill_in "user_password_confirmation", with: "password"
+    find_button("Create User").click
+    visit cart_items_path
+    expect(page).to have_content(item.title)
+    expect(page).to have_content(item.price)
+    expect(page).to have_content("Quantity")
+    within(".cart_item_#{item.id} .quantity") do
+      expect(page).to have_content("1")
+    end
+  end
 
   it 'logs in without clearing the cart' do
     item

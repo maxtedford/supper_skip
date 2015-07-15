@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 		@user = User.new(user_params)
 		if @user.save
 			session[:user_id] = @user.id
+      convert_cart(@user, session)
 			redirect_to root_path
 		else
 			render :new
@@ -42,6 +43,7 @@ class UsersController < ApplicationController
 	end
 
   private
+  
   def user_params
     params.require(:user).permit(:email_address, :name, :display_name, :password, :password_confirmation)
   end
@@ -53,5 +55,12 @@ class UsersController < ApplicationController
 	def unauthorized
 		flash[:errors] = "You can only view your own information"
 		redirect_to root_path
-	end
+  end
+
+  def convert_cart(user, session)
+    return if session[:order_id] || !session[:cart].present?
+    order = CartOrderConverter.convert(@cart.to_h, user)
+    session[:order_id] = order.id
+    session[:cart] = nil
+  end
 end
