@@ -1,4 +1,4 @@
-<h1><%= @res %></h1>
+<h2 id="yellow"><%= @category.name %></h2>
 <% @items.each do |item| %>
   <div class="<%= item.title %> thumbnail col-sm-6 col-md-4">
     <%= link_to (image_tag item.image.url(:medium)), restaurant_item_path(@restaurant, item) %>
