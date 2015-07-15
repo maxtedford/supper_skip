@@ -67,8 +67,8 @@ Rails.application.configure do
     :address   => "smtp.mandrillapp.com",
     :port      => 25,
     :enable_starttls_auto => true,
-    user_name: ENV["EMAIL"],
-    password: ENV["PASSWORD"],
+    :user_name => ENV["EMAIL"],
+    :password => ENV["PASSWORD"],
     :authentication => 'login',
     :domain => 'supper-sprint.herokuapp.com',
   }
