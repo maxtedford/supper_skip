@@ -68,7 +68,7 @@ Rails.application.configure do
     :port      => 25,
     :enable_starttls_auto => true,
     :user_name => ENV["EMAIL"],
-    :password  => ENV["PASSWORD"],
+    :password => ENV["PASSWORD"],
     :authentication => 'login',
     :domain => 'supper-sprint.herokuapp.com',
   }

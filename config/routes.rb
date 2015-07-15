@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   resources :orders
   resources :items
   resources :user_roles, only: [:new, :create]
+  
+  get '/registration', to: 'registrations#new'
+  post '/registration', to: 'registrations#create'
 
   get 'code', to: redirect('https://github.com/larsonkonr/dinner_dash')
   root 'restaurants#index'
