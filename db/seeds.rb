@@ -195,7 +195,7 @@ order7.items << tomato_cheese_sandwich
 
 order8 = Order.create!(delivery: false,
                        user: josh,
-                       status: "paid")
+                       status: "completed")
 order8.items << tomato_bruschetta
 order8.items << shepherds_pie
 order8.items << moose_burger

@@ -137,7 +137,7 @@ describe "the authenticated non-administrator", type: :feature do
   end
 
   it "can view retired items from previous orders but not add them to cart" do
-    order = Order.create!(user: user, status: "paid")
+    order = Order.create!(user: user, status: "ordered")
     retired_item = Item.create!(title: "retired", description: "retired", price: 5, categories: [category])
     order.items << retired_item
     retired_item.retired = true
