@@ -1,5 +1,6 @@
+<br>
 <% if @categories.last %>
-  <%= link_to "Back to your Restaurant", restaurant_path(@categories.last.restaurant) %>
+  <h3><%= link_to "Back to your Restaurant", restaurant_path(@categories.last.restaurant) %></h3>
 <% end %>
 <h2>Categories:</h2>
 <% @categories.each do |category| %>
