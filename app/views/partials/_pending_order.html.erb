@@ -34,6 +34,7 @@
           <td></td>
           <td></td>
           <td>Restaurant Subtotal: $<%= order_items.map(&:item).uniq.map { |item| order.subtotal(item) }.inject(:+).to_i %></td>
+          Status: <%= order_items.last.restaurant_order.status %>
         </tr>
         </tfoot>
       </table>

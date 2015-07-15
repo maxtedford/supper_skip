@@ -16,4 +16,12 @@ class User < ActiveRecord::Base
       user_roles.where(restaurant_id: restaurant.id, role_id: role.id).any?
     end
   end
+  
+  def added_restaurant
+    user_roles.map(&:restaurant).last.name
+  end
+
+  def added_role
+    user_roles.map(&:role).last.name
+  end
 end
