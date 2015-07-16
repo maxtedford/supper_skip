@@ -8,7 +8,7 @@ class OrderCart
     update_quantities
   end
 
-  def add_item(item)
+  def add_item(item)  
     order.order_items.create!(item: item, restaurant: item.restaurant)
     grouped_rest_orders = order.order_items.group_by {|order_item| order_item.restaurant}
     grouped_rest_orders.map do |rest, order_items|
