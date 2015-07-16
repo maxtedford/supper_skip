@@ -4,9 +4,9 @@
       <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
 
       <ul>
-      <% @item.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -24,6 +24,10 @@
     <%= f.text_field :price %>
   </div>
   <div class="field">
+    <%= f.label :prep_time  %><br>
+    <%= f.text_field :prep_time %>
+  </div>
+  <div class="field">
     <%= f.collection_check_boxes(:category_ids, @restaurant.categories, :id, :name) %>
   </div>
   <div class="field">
@@ -37,4 +41,4 @@
   <div class="actions">
     <%= f.submit class: "btn btn-default nav-link" %>
   </div>
-  <% end %>
+<% end %>

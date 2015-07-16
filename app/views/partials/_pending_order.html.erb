@@ -1,6 +1,6 @@
+<h2>Your Order will be ready in approximately: <%= order.prep_time %> minutes!</h2>
 <div class="edit-form">
   <% all_items = order.order_items.map { |oi| oi.item } %>
-
   <% grouped_rest_orders = order.order_items.group_by(&:restaurant_id) %>
   <% grouped_rest_orders.each do |resto_id, order_items| %>
     <% if resto_id %>
