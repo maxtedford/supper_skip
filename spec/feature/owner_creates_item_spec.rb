@@ -11,8 +11,10 @@ describe 'the application', type: :feature do
                     password_confirmation: "password" }
       user = User.create(user_data)
       user_role = Role.create(name: "owner")
+      category = Category.create(name: "Entree")
       restaurant = Restaurant.new(name: "resto1234",
-                                  description: "descripto1234")
+                                  description: "descripto1234",
+                                  categories: [category])
       user.user_roles.create(role: user_role, restaurant: restaurant)
 
       visit root_path
@@ -27,12 +29,17 @@ describe 'the application', type: :feature do
       expect(page).to have_content("Create Item")
     end
 
-    xit "actually creates the item" do
+    it "actually creates the item" do
       click_link("Create Item")
       fill_in "Title", with: "some item"
       fill_in "Description", with: "some desc"
       fill_in "Price", with: 9.99
-      check_box "item_category_ids_1"
+      check("item[category_ids][]")
+      click_on("Create Item")
+      
+      expect(page).to have_content("some item")
+      expect(page).to have_content("some desc")
+      expect(page).to have_link("Add to Cart")
     end
   end
 end
