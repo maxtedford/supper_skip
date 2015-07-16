@@ -115,6 +115,14 @@ class Order < ActiveRecord::Base
   def group_by_restaurant
     items.group_by(&:restaurant)
   end
+  
+  def all_items
+    order_items.map { |oi| oi.item }
+  end
+  
+  def group_by_restaurant_id
+    order_items.group_by(&:restaurant_id)
+  end
 
   def prep_time
     delay_time = (Order.all.count - Order.where(status: "completed").count - 2) * 4
