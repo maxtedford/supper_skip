@@ -123,4 +123,13 @@ class Order < ActiveRecord::Base
   def group_by_restaurant_id
     order_items.group_by(&:restaurant_id)
   end
+
+  def prep_time
+    delay_time = (Order.all.count - Order.where(status: "completed").count - 2) * 4
+    if items.count < 6
+      items.map(&:prep_time).reduce(:+) + delay_time
+    else
+      items.map(&:prep_time).reduce(:+) + (((items.count - 6)/ 6) * 10) + delay_time
+    end
+  end
 end
