@@ -1,7 +1,7 @@
 class Restaurant::ItemsController < ApplicationController
   before_action :load_restaurant
   before_action :authorize!, only: [:edit]
-  
+
   def show
     @item = @restaurant.items.find(params[:id])
   end
@@ -50,7 +50,7 @@ class Restaurant::ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:title, :description, :price, :image, :retired, :restaurant_id, category_ids: [])
+    params.require(:item).permit(:title, :description, :price, :image, :retired, :restaurant_id, :prep_time, category_ids: [])
   end
 
   def load_restaurant
@@ -64,4 +64,3 @@ class Restaurant::ItemsController < ApplicationController
     end
   end
 end
-
