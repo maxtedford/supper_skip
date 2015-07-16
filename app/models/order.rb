@@ -117,7 +117,7 @@ class Order < ActiveRecord::Base
   end
 
   def prep_time
-    delay_time = (Order.all.count - Order.where(status: "completed").count) * 4
+    delay_time = (Order.all.count - Order.where(status: "completed").count - 2) * 4
     if items.count < 6
       items.map(&:prep_time).reduce(:+) + delay_time
     else
